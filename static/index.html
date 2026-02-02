@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lying Replay Viewer</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="controls">
+      <label>
+        Replay
+        <select id="replay-select"></select>
+      </label>
+      <span id="step-counter">Step 0 / 0</span>
+      <div class="buttons">
+        <button id="btn-start" title="Start">&laquo;</button>
+        <button id="btn-prev" title="Previous">&lsaquo;</button>
+        <button id="btn-play" title="Play">Play</button>
+        <button id="btn-next" title="Next">&rsaquo;</button>
+        <button id="btn-end" title="End">&raquo;</button>
+      </div>
+      <label>
+        Speed
+        <select id="speed-select">
+          <option value="0.5">0.5x</option>
+          <option value="1" selected>1x</option>
+          <option value="2">2x</option>
+          <option value="4">4x</option>
+        </select>
+      </label>
+      <label class="toggle">
+        <input type="checkbox" id="public-toggle" />
+        Public view
+      </label>
+    </div>
+    <input id="step-slider" type="range" min="0" max="0" value="0" />
+  </header>
+
+  <main class="layout">
+    <section class="panel left">
+      <h2>Current Event</h2>
+      <div id="event-text" class="event-text">Load a replay to begin.</div>
+      <div class="state-list">
+        <div><strong>Active Rank:</strong> <span id="active-rank">-</span></div>
+        <div><strong>Current Turn:</strong> <span id="current-player">-</span></div>
+        <div><strong>Pile Size:</strong> <span id="pile-size">0</span></div>
+      </div>
+      <details class="history" open>
+        <summary>History</summary>
+        <ol id="history-list"></ol>
+      </details>
+    </section>
+
+    <section class="panel center">
+      <h2>Pile</h2>
+      <div id="pile-cards" class="card-list"></div>
+    </section>
+
+    <section class="panel right">
+      <h2>Players</h2>
+      <div id="players"></div>
+    </section>
+  </main>
+
+  <div id="error-banner" class="error hidden"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>

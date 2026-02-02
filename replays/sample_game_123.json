@@ -1,0 +1,3852 @@
+{
+  "metadata": {
+    "seed": 54907,
+    "timestamp": "2026-02-02T14:44:31.567975+00:00",
+    "player_count": 4,
+    "bot_types": [
+      "heuristic",
+      "random",
+      "heuristic",
+      "random"
+    ]
+  },
+  "initial_state": {
+    "players": [
+      {
+        "hand": [
+          "4♠",
+          "8♥",
+          "3♦",
+          "10♦",
+          "J♦",
+          "9♠",
+          "2♥",
+          "8♣",
+          "A♦",
+          "Q♥",
+          "A♠",
+          "6♦",
+          "A♥"
+        ],
+        "bot": "heuristic",
+        "placement": null,
+        "discarded": []
+      },
+      {
+        "hand": [
+          "6♥",
+          "2♣",
+          "K♦",
+          "7♥",
+          "9♣",
+          "K♣",
+          "2♠",
+          "6♠",
+          "8♦",
+          "Q♠",
+          "4♦",
+          "J♣",
+          "2♦"
+        ],
+        "bot": "random",
+        "placement": null,
+        "discarded": []
+      },
+      {
+        "hand": [
+          "4♣",
+          "5♦",
+          "K♥",
+          "A♣",
+          "J♥",
+          "5♠",
+          "3♠",
+          "Q♦",
+          "10♠",
+          "7♠",
+          "9♥",
+          "5♥",
+          "8♠"
+        ],
+        "bot": "heuristic",
+        "placement": null,
+        "discarded": []
+      },
+      {
+        "hand": [
+          "3♥",
+          "Q♣",
+          "7♣",
+          "10♥",
+          "3♣",
+          "5♣",
+          "4♥",
+          "6♣",
+          "J♠",
+          "7♦",
+          "9♦",
+          "10♣",
+          "K♠"
+        ],
+        "bot": "random",
+        "placement": null,
+        "discarded": []
+      }
+    ],
+    "active_rank": null,
+    "pile": [],
+    "current_player": 0,
+    "placements": []
+  },
+  "events": [
+    {
+      "type": "GAME_START"
+    },
+    {
+      "type": "SELECT_RANK",
+      "player": 0,
+      "rank": "A"
+    },
+    {
+      "type": "PLAY",
+      "player": 0,
+      "claim_rank": "A",
+      "cards": [
+        "A♦",
+        "A♠",
+        "A♥"
+      ]
+    },
+    {
+      "type": "CHALLENGE_DECISION",
+      "challenger": 1,
+      "challenge": false
+    },
+    {
+      "type": "PLAY",
+      "player": 1,
+      "claim_rank": "A",
+      "cards": [
+        "7♥",
+        "2♦"
+      ]
+    },
+    {
+      "type": "CHALLENGE_DECISION",
+      "challenger": 2,
+      "challenge": true
+    },
+    {
+      "type": "CHALLENGE_RESOLUTION",
+      "challenger": 2,
+      "truthful": false,
+      "revealed": [
+        "7♥",
+        "2♦"
+      ]
+    },
+    {
+      "type": "PICKUP_PILE",
+      "player": 1,
+      "cards": [
+        "A♦",
+        "A♠",
+        "A♥",
+        "7♥",
+        "2♦"
+      ]
+    },
+    {
+      "type": "SELECT_RANK",
+      "player": 2,
+      "rank": "5"
+    },
+    {
+      "type": "PLAY",
+      "player": 2,
+      "claim_rank": "5",
+      "cards": [
+        "5♦",
+        "5♠",
+        "5♥"
+      ]
+    },
+    {
+      "type": "CHALLENGE_DECISION",
+      "challenger": 3,
+      "challenge": false
+    },
+    {
+      "type": "PLAY",
+      "player": 3,
+      "claim_rank": "5",
+      "cards": [
+        "3♣"
+      ]
+    },
+    {
+      "type": "CHALLENGE_DECISION",
+      "challenger": 0,
+      "challenge": true
+    },
+    {
+      "type": "CHALLENGE_RESOLUTION",
+      "challenger": 0,
+      "truthful": false,
+      "revealed": [
+        "3♣"
+      ]
+    },
+    {
+      "type": "PICKUP_PILE",
+      "player": 3,
+      "cards": [
+        "5♦",
+        "5♠",
+        "5♥",
+        "3♣"
+      ]
+    },
+    {
+      "type": "DISCARD_QUAD",
+      "player": 3,
+      "rank": "5",
+      "cards": [
+        "5♣",
+        "5♦",
+        "5♠",
+        "5♥"
+      ]
+    },
+    {
+      "type": "SELECT_RANK",
+      "player": 0,
+      "rank": "8"
+    },
+    {
+      "type": "PLAY",
+      "player": 0,
+      "claim_rank": "8",
+      "cards": [
+        "8♥",
+        "8♣"
+      ]
+    },
+    {
+      "type": "CHALLENGE_DECISION",
+      "challenger": 1,
+      "challenge": false
+    },
+    {
+      "type": "PLAY",
+      "player": 1,
+      "claim_rank": "8",
+      "cards": [
+        "A♠",
+        "2♠"
+      ]
+    },
+    {
+      "type": "CHALLENGE_DECISION",
+      "challenger": 2,
+      "challenge": true
+    },
+    {
+      "type": "CHALLENGE_RESOLUTION",
+      "challenger": 2,
+      "truthful": false,
+      "revealed": [
+        "A♠",
+        "2♠"
+      ]
+    },
+    {
+      "type": "PICKUP_PILE",
+      "player": 1,
+      "cards": [
+        "8♥",
+        "8♣",
+        "A♠",
+        "2♠"
+      ]
+    },
+    {
+      "type": "SELECT_RANK",
+      "player": 2,
+      "rank": "3"
+    },
+    {
+      "type": "PLAY",
+      "player": 2,
+      "claim_rank": "3",
+      "cards": [
+        "3♠"
+      ]
+    },
+    {
+      "type": "CHALLENGE_DECISION",
+      "challenger": 3,
+      "challenge": false
+    },
+    {
+      "type": "PLAY",
+      "player": 3,
+      "claim_rank": "3",
+      "cards": [
+        "7♣",
+        "4♥"
+      ]
+    },
+    {
+      "type": "CHALLENGE_DECISION",
+      "challenger": 0,
+      "challenge": true
+    },
+    {
+      "type": "CHALLENGE_RESOLUTION",
+      "challenger": 0,
+      "truthful": false,
+      "revealed": [
+        "7♣",
+        "4♥"
+      ]
+    },
+    {
+      "type": "PICKUP_PILE",
+      "player": 3,
+      "cards": [
+        "3♠",
+        "7♣",
+        "4♥"
+      ]
+    },
+    {
+      "type": "SELECT_RANK",
+      "player": 0,
+      "rank": "10"
+    },
+    {
+      "type": "PLAY",
+      "player": 0,
+      "claim_rank": "10",
+      "cards": [
+        "10♦"
+      ]
+    },
+    {
+      "type": "CHALLENGE_DECISION",
+      "challenger": 1,
+      "challenge": false
+    },
+    {
+      "type": "PLAY",
+      "player": 1,
+      "claim_rank": "10",
+      "cards": [
+        "A♥"
+      ]
+    },
+    {
+      "type": "CHALLENGE_DECISION",
+      "challenger": 2,
+      "challenge": true
+    },
+    {
+      "type": "CHALLENGE_RESOLUTION",
+      "challenger": 2,
+      "truthful": false,
+      "revealed": [
+        "A♥"
+      ]
+    },
+    {
+      "type": "PICKUP_PILE",
+      "player": 1,
+      "cards": [
+        "10♦",
+        "A♥"
+      ]
+    },
+    {
+      "type": "SELECT_RANK",
+      "player": 2,
+      "rank": "8"
+    },
+    {
+      "type": "PLAY",
+      "player": 2,
+      "claim_rank": "8",
+      "cards": [
+        "8♠"
+      ]
+    },
+    {
+      "type": "CHALLENGE_DECISION",
+      "challenger": 3,
+      "challenge": false
+    },
+    {
+      "type": "PLAY",
+      "player": 3,
+      "claim_rank": "8",
+      "cards": [
+        "3♠"
+      ]
+    },
+    {
+      "type": "CHALLENGE_DECISION",
+      "challenger": 0,
+      "challenge": true
+    },
+    {
+      "type": "CHALLENGE_RESOLUTION",
+      "challenger": 0,
+      "truthful": false,
+      "revealed": [
+        "3♠"
+      ]
+    },
+    {
+      "type": "PICKUP_PILE",
+      "player": 3,
+      "cards": [
+        "8♠",
+        "3♠"
+      ]
+    },
+    {
+      "type": "SELECT_RANK",
+      "player": 0,
+      "rank": "2"
+    },
+    {
+      "type": "PLAY",
+      "player": 0,
+      "claim_rank": "2",
+      "cards": [
+        "2♥"
+      ]
+    },
+    {
+      "type": "CHALLENGE_DECISION",
+      "challenger": 1,
+      "challenge": false
+    },
+    {
+      "type": "PLAY",
+      "player": 1,
+      "claim_rank": "2",
+      "cards": [
+        "J♣",
+        "K♣",
+        "8♦"
+      ]
+    },
+    {
+      "type": "CHALLENGE_DECISION",
+      "challenger": 2,
+      "challenge": true
+    },
+    {
+      "type": "CHALLENGE_RESOLUTION",
+      "challenger": 2,
+      "truthful": false,
+      "revealed": [
+        "J♣",
+        "K♣",
+        "8♦"
+      ]
+    },
+    {
+      "type": "PICKUP_PILE",
+      "player": 1,
+      "cards": [
+        "2♥",
+        "J♣",
+        "K♣",
+        "8♦"
+      ]
+    },
+    {
+      "type": "DISCARD_QUAD",
+      "player": 1,
+      "rank": "2",
+      "cards": [
+        "2♣",
+        "2♦",
+        "2♠",
+        "2♥"
+      ]
+    },
+    {
+      "type": "SELECT_RANK",
+      "player": 2,
+      "rank": "4"
+    },
+    {
+      "type": "PLAY",
+      "player": 2,
+      "claim_rank": "4",
+      "cards": [
+        "4♣"
+      ]
+    },
+    {
+      "type": "CHALLENGE_DECISION",
+      "challenger": 3,
+      "challenge": false
+    },
+    {
+      "type": "PLAY",
+      "player": 3,
+      "claim_rank": "4",
+      "cards": [
+        "Q♣",
+        "3♣",
+        "8♠"
+      ]
+    },
+    {
+      "type": "CHALLENGE_DECISION",
+      "challenger": 0,
+      "challenge": true
+    },
+    {
+      "type": "CHALLENGE_RESOLUTION",
+      "challenger": 0,
+      "truthful": false,
+      "revealed": [
+        "Q♣",
+        "3♣",
+        "8♠"
+      ]
+    },
+    {
+      "type": "PICKUP_PILE",
+      "player": 3,
+      "cards": [
+        "4♣",
+        "Q♣",
+        "3♣",
+        "8♠"
+      ]
+    },
+    {
+      "type": "SELECT_RANK",
+      "player": 0,
+      "rank": "6"
+    },
+    {
+      "type": "PLAY",
+      "player": 0,
+      "claim_rank": "6",
+      "cards": [
+        "6♦"
+      ]
+    },
+    {
+      "type": "CHALLENGE_DECISION",
+      "challenger": 1,
+      "challenge": false
+    },
+    {
+      "type": "PLAY",
+      "player": 1,
+      "claim_rank": "6",
+      "cards": [
+        "A♠",
+        "A♥"
+      ]
+    },
+    {
+      "type": "CHALLENGE_DECISION",
+      "challenger": 2,
+      "challenge": true
+    },
+    {
+      "type": "CHALLENGE_RESOLUTION",
+      "challenger": 2,
+      "truthful": false,
+      "revealed": [
+        "A♠",
+        "A♥"
+      ]
+    },
+    {
+      "type": "PICKUP_PILE",
+      "player": 1,
+      "cards": [
+        "6♦",
+        "A♠",
+        "A♥"
+      ]
+    },
+    {
+      "type": "SELECT_RANK",
+      "player": 2,
+      "rank": "K"
+    },
+    {
+      "type": "PLAY",
+      "player": 2,
+      "claim_rank": "K",
+      "cards": [
+        "K♥"
+      ]
+    },
+    {
+      "type": "CHALLENGE_DECISION",
+      "challenger": 3,
+      "challenge": false
+    },
+    {
+      "type": "PLAY",
+      "player": 3,
+      "claim_rank": "K",
+      "cards": [
+        "3♠",
+        "6♣",
+        "3♥"
+      ]
+    },
+    {
+      "type": "CHALLENGE_DECISION",
+      "challenger": 0,
+      "challenge": true
+    },
+    {
+      "type": "CHALLENGE_RESOLUTION",
+      "challenger": 0,
+      "truthful": false,
+      "revealed": [
+        "3♠",
+        "6♣",
+        "3♥"
+      ]
+    },
+    {
+      "type": "PICKUP_PILE",
+      "player": 3,
+      "cards": [
+        "K♥",
+        "3♠",
+        "6♣",
+        "3♥"
+      ]
+    },
+    {
+      "type": "SELECT_RANK",
+      "player": 0,
+      "rank": "Q"
+    },
+    {
+      "type": "PLAY",
+      "player": 0,
+      "claim_rank": "Q",
+      "cards": [
+        "Q♥"
+      ]
+    },
+    {
+      "type": "CHALLENGE_DECISION",
+      "challenger": 1,
+      "challenge": false
+    },
+    {
+      "type": "PLAY",
+      "player": 1,
+      "claim_rank": "Q",
+      "cards": [
+        "A♠",
+        "8♥",
+        "4♦"
+      ]
+    },
+    {
+      "type": "CHALLENGE_DECISION",
+      "challenger": 2,
+      "challenge": true
+    },
+    {
+      "type": "CHALLENGE_RESOLUTION",
+      "challenger": 2,
+      "truthful": false,
+      "revealed": [
+        "A♠",
+        "8♥",
+        "4♦"
+      ]
+    },
+    {
+      "type": "PICKUP_PILE",
+      "player": 1,
+      "cards": [
+        "Q♥",
+        "A♠",
+        "8♥",
+        "4♦"
+      ]
+    },
+    {
+      "type": "SELECT_RANK",
+      "player": 2,
+      "rank": "7"
+    },
+    {
+      "type": "PLAY",
+      "player": 2,
+      "claim_rank": "7",
+      "cards": [
+        "7♠"
+      ]
+    },
+    {
+      "type": "CHALLENGE_DECISION",
+      "challenger": 3,
+      "challenge": false
+    },
+    {
+      "type": "PLAY",
+      "player": 3,
+      "claim_rank": "7",
+      "cards": [
+        "3♠",
+        "K♠"
+      ]
+    },
+    {
+      "type": "CHALLENGE_DECISION",
+      "challenger": 0,
+      "challenge": true
+    },
+    {
+      "type": "CHALLENGE_RESOLUTION",
+      "challenger": 0,
+      "truthful": false,
+      "revealed": [
+        "3♠",
+        "K♠"
+      ]
+    },
+    {
+      "type": "PICKUP_PILE",
+      "player": 3,
+      "cards": [
+        "7♠",
+        "3♠",
+        "K♠"
+      ]
+    },
+    {
+      "type": "SELECT_RANK",
+      "player": 0,
+      "rank": "9"
+    },
+    {
+      "type": "PLAY",
+      "player": 0,
+      "claim_rank": "9",
+      "cards": [
+        "9♠"
+      ]
+    },
+    {
+      "type": "CHALLENGE_DECISION",
+      "challenger": 1,
+      "challenge": false
+    },
+    {
+      "type": "PLAY",
+      "player": 1,
+      "claim_rank": "9",
+      "cards": [
+        "A♦",
+        "K♦",
+        "Q♥"
+      ]
+    },
+    {
+      "type": "CHALLENGE_DECISION",
+      "challenger": 2,
+      "challenge": true
+    },
+    {
+      "type": "CHALLENGE_RESOLUTION",
+      "challenger": 2,
+      "truthful": false,
+      "revealed": [
+        "A♦",
+        "K♦",
+        "Q♥"
+      ]
+    },
+    {
+      "type": "PICKUP_PILE",
+      "player": 1,
+      "cards": [
+        "9♠",
+        "A♦",
+        "K♦",
+        "Q♥"
+      ]
+    },
+    {
+      "type": "SELECT_RANK",
+      "player": 2,
+      "rank": "J"
+    },
+    {
+      "type": "PLAY",
+      "player": 2,
+      "claim_rank": "J",
+      "cards": [
+        "J♥"
+      ]
+    },
+    {
+      "type": "CHALLENGE_DECISION",
+      "challenger": 3,
+      "challenge": false
+    },
+    {
+      "type": "PLAY",
+      "player": 3,
+      "claim_rank": "J",
+      "cards": [
+        "8♠",
+        "4♥",
+        "K♠"
+      ]
+    },
+    {
+      "type": "CHALLENGE_DECISION",
+      "challenger": 0,
+      "challenge": true
+    },
+    {
+      "type": "CHALLENGE_RESOLUTION",
+      "challenger": 0,
+      "truthful": false,
+      "revealed": [
+        "8♠",
+        "4♥",
+        "K♠"
+      ]
+    },
+    {
+      "type": "PICKUP_PILE",
+      "player": 3,
+      "cards": [
+        "J♥",
+        "8♠",
+        "4♥",
+        "K♠"
+      ]
+    },
+    {
+      "type": "SELECT_RANK",
+      "player": 0,
+      "rank": "J"
+    },
+    {
+      "type": "PLAY",
+      "player": 0,
+      "claim_rank": "J",
+      "cards": [
+        "J♦"
+      ]
+    },
+    {
+      "type": "CHALLENGE_DECISION",
+      "challenger": 1,
+      "challenge": false
+    },
+    {
+      "type": "PLAY",
+      "player": 1,
+      "claim_rank": "J",
+      "cards": [
+        "A♥"
+      ]
+    },
+    {
+      "type": "CHALLENGE_DECISION",
+      "challenger": 2,
+      "challenge": true
+    },
+    {
+      "type": "CHALLENGE_RESOLUTION",
+      "challenger": 2,
+      "truthful": false,
+      "revealed": [
+        "A♥"
+      ]
+    },
+    {
+      "type": "PICKUP_PILE",
+      "player": 1,
+      "cards": [
+        "J♦",
+        "A♥"
+      ]
+    },
+    {
+      "type": "SELECT_RANK",
+      "player": 2,
+      "rank": "10"
+    },
+    {
+      "type": "PLAY",
+      "player": 2,
+      "claim_rank": "10",
+      "cards": [
+        "10♠"
+      ]
+    },
+    {
+      "type": "CHALLENGE_DECISION",
+      "challenger": 3,
+      "challenge": false
+    },
+    {
+      "type": "PLAY",
+      "player": 3,
+      "claim_rank": "10",
+      "cards": [
+        "4♥"
+      ]
+    },
+    {
+      "type": "CHALLENGE_DECISION",
+      "challenger": 0,
+      "challenge": true
+    },
+    {
+      "type": "CHALLENGE_RESOLUTION",
+      "challenger": 0,
+      "truthful": false,
+      "revealed": [
+        "4♥"
+      ]
+    },
+    {
+      "type": "PICKUP_PILE",
+      "player": 3,
+      "cards": [
+        "10♠",
+        "4♥"
+      ]
+    },
+    {
+      "type": "SELECT_RANK",
+      "player": 0,
+      "rank": "4"
+    },
+    {
+      "type": "PLAY",
+      "player": 0,
+      "claim_rank": "4",
+      "cards": [
+        "4♠"
+      ]
+    },
+    {
+      "type": "CHALLENGE_DECISION",
+      "challenger": 1,
+      "challenge": false
+    },
+    {
+      "type": "PLAY",
+      "player": 1,
+      "claim_rank": "4",
+      "cards": [
+        "K♣",
+        "A♦"
+      ]
+    },
+    {
+      "type": "CHALLENGE_DECISION",
+      "challenger": 2,
+      "challenge": true
+    },
+    {
+      "type": "CHALLENGE_RESOLUTION",
+      "challenger": 2,
+      "truthful": false,
+      "revealed": [
+        "K♣",
+        "A♦"
+      ]
+    },
+    {
+      "type": "PICKUP_PILE",
+      "player": 1,
+      "cards": [
+        "4♠",
+        "K♣",
+        "A♦"
+      ]
+    },
+    {
+      "type": "SELECT_RANK",
+      "player": 2,
+      "rank": "9"
+    },
+    {
+      "type": "PLAY",
+      "player": 2,
+      "claim_rank": "9",
+      "cards": [
+        "9♥"
+      ]
+    },
+    {
+      "type": "CHALLENGE_DECISION",
+      "challenger": 3,
+      "challenge": false
+    },
+    {
+      "type": "PLAY",
+      "player": 3,
+      "claim_rank": "9",
+      "cards": [
+        "10♠",
+        "3♠"
+      ]
+    },
+    {
+      "type": "CHALLENGE_DECISION",
+      "challenger": 0,
+      "challenge": true
+    },
+    {
+      "type": "CHALLENGE_RESOLUTION",
+      "challenger": 0,
+      "truthful": false,
+      "revealed": [
+        "10♠",
+        "3♠"
+      ]
+    },
+    {
+      "type": "PICKUP_PILE",
+      "player": 3,
+      "cards": [
+        "9♥",
+        "10♠",
+        "3♠"
+      ]
+    },
+    {
+      "type": "SELECT_RANK",
+      "player": 0,
+      "rank": "3"
+    },
+    {
+      "type": "PLAY",
+      "player": 0,
+      "claim_rank": "3",
+      "cards": [
+        "3♦"
+      ]
+    },
+    {
+      "type": "PLACEMENT",
+      "player": 0,
+      "place": 1
+    },
+    {
+      "type": "CHALLENGE_DECISION",
+      "challenger": 1,
+      "challenge": false
+    },
+    {
+      "type": "PLAY",
+      "player": 2,
+      "claim_rank": "3",
+      "cards": [
+        "A♣"
+      ]
+    },
+    {
+      "type": "CHALLENGE_DECISION",
+      "challenger": 3,
+      "challenge": false
+    },
+    {
+      "type": "PLAY",
+      "player": 3,
+      "claim_rank": "3",
+      "cards": [
+        "J♠"
+      ]
+    },
+    {
+      "type": "CHALLENGE_DECISION",
+      "challenger": 1,
+      "challenge": false
+    },
+    {
+      "type": "PLAY",
+      "player": 1,
+      "claim_rank": "3",
+      "cards": [
+        "8♥",
+        "8♣"
+      ]
+    },
+    {
+      "type": "CHALLENGE_DECISION",
+      "challenger": 2,
+      "challenge": true
+    },
+    {
+      "type": "CHALLENGE_RESOLUTION",
+      "challenger": 2,
+      "truthful": false,
+      "revealed": [
+        "8♥",
+        "8♣"
+      ]
+    },
+    {
+      "type": "PICKUP_PILE",
+      "player": 1,
+      "cards": [
+        "3♦",
+        "A♣",
+        "J♠",
+        "8♥",
+        "8♣"
+      ]
+    },
+    {
+      "type": "SELECT_RANK",
+      "player": 2,
+      "rank": "Q"
+    },
+    {
+      "type": "PLAY",
+      "player": 2,
+      "claim_rank": "Q",
+      "cards": [
+        "Q♦"
+      ]
+    },
+    {
+      "type": "PLACEMENT",
+      "player": 2,
+      "place": 2
+    },
+    {
+      "type": "CHALLENGE_DECISION",
+      "challenger": 3,
+      "challenge": false
+    },
+    {
+      "type": "PLAY",
+      "player": 1,
+      "claim_rank": "Q",
+      "cards": [
+        "8♣"
+      ]
+    },
+    {
+      "type": "CHALLENGE_DECISION",
+      "challenger": 3,
+      "challenge": false
+    },
+    {
+      "type": "PLAY",
+      "player": 3,
+      "claim_rank": "Q",
+      "cards": [
+        "3♥"
+      ]
+    },
+    {
+      "type": "CHALLENGE_DECISION",
+      "challenger": 1,
+      "challenge": false
+    },
+    {
+      "type": "PLAY",
+      "player": 1,
+      "claim_rank": "Q",
+      "cards": [
+        "Q♥"
+      ]
+    },
+    {
+      "type": "CHALLENGE_DECISION",
+      "challenger": 3,
+      "challenge": false
+    },
+    {
+      "type": "PLAY",
+      "player": 3,
+      "claim_rank": "Q",
+      "cards": [
+        "4♣",
+        "9♦",
+        "J♥"
+      ]
+    },
+    {
+      "type": "CHALLENGE_DECISION",
+      "challenger": 1,
+      "challenge": false
+    },
+    {
+      "type": "PLAY",
+      "player": 1,
+      "claim_rank": "Q",
+      "cards": [
+        "3♦"
+      ]
+    },
+    {
+      "type": "CHALLENGE_DECISION",
+      "challenger": 3,
+      "challenge": false
+    },
+    {
+      "type": "PLAY",
+      "player": 3,
+      "claim_rank": "Q",
+      "cards": [
+        "K♥"
+      ]
+    },
+    {
+      "type": "CHALLENGE_DECISION",
+      "challenger": 1,
+      "challenge": true
+    },
+    {
+      "type": "CHALLENGE_RESOLUTION",
+      "challenger": 1,
+      "truthful": false,
+      "revealed": [
+        "K♥"
+      ]
+    },
+    {
+      "type": "PICKUP_PILE",
+      "player": 3,
+      "cards": [
+        "Q♦",
+        "8♣",
+        "3♥",
+        "Q♥",
+        "4♣",
+        "9♦",
+        "J♥",
+        "3♦",
+        "K♥"
+      ]
+    },
+    {
+      "type": "DISCARD_QUAD",
+      "player": 3,
+      "rank": "3",
+      "cards": [
+        "3♣",
+        "3♠",
+        "3♥",
+        "3♦"
+      ]
+    },
+    {
+      "type": "SELECT_RANK",
+      "player": 1,
+      "rank": "J"
+    },
+    {
+      "type": "PLAY",
+      "player": 1,
+      "claim_rank": "J",
+      "cards": [
+        "K♦",
+        "A♠"
+      ]
+    },
+    {
+      "type": "CHALLENGE_DECISION",
+      "challenger": 3,
+      "challenge": true
+    },
+    {
+      "type": "CHALLENGE_RESOLUTION",
+      "challenger": 3,
+      "truthful": false,
+      "revealed": [
+        "K♦",
+        "A♠"
+      ]
+    },
+    {
+      "type": "PICKUP_PILE",
+      "player": 1,
+      "cards": [
+        "K♦",
+        "A♠"
+      ]
+    },
+    {
+      "type": "SELECT_RANK",
+      "player": 3,
+      "rank": "J"
+    },
+    {
+      "type": "PLAY",
+      "player": 3,
+      "claim_rank": "J",
+      "cards": [
+        "9♥",
+        "Q♦",
+        "9♦"
+      ]
+    },
+    {
+      "type": "CHALLENGE_DECISION",
+      "challenger": 1,
+      "challenge": false
+    },
+    {
+      "type": "PLAY",
+      "player": 1,
+      "claim_rank": "J",
+      "cards": [
+        "6♥"
+      ]
+    },
+    {
+      "type": "CHALLENGE_DECISION",
+      "challenger": 3,
+      "challenge": true
+    },
+    {
+      "type": "CHALLENGE_RESOLUTION",
+      "challenger": 3,
+      "truthful": false,
+      "revealed": [
+        "6♥"
+      ]
+    },
+    {
+      "type": "PICKUP_PILE",
+      "player": 1,
+      "cards": [
+        "9♥",
+        "Q♦",
+        "9♦",
+        "6♥"
+      ]
+    },
+    {
+      "type": "DISCARD_QUAD",
+      "player": 1,
+      "rank": "9",
+      "cards": [
+        "9♣",
+        "9♠",
+        "9♥",
+        "9♦"
+      ]
+    },
+    {
+      "type": "SELECT_RANK",
+      "player": 3,
+      "rank": "Q"
+    },
+    {
+      "type": "PLAY",
+      "player": 3,
+      "claim_rank": "Q",
+      "cards": [
+        "10♠"
+      ]
+    },
+    {
+      "type": "CHALLENGE_DECISION",
+      "challenger": 1,
+      "challenge": false
+    },
+    {
+      "type": "PLAY",
+      "player": 1,
+      "claim_rank": "Q",
+      "cards": [
+        "7♥",
+        "8♥"
+      ]
+    },
+    {
+      "type": "CHALLENGE_DECISION",
+      "challenger": 3,
+      "challenge": false
+    },
+    {
+      "type": "PLAY",
+      "player": 3,
+      "claim_rank": "Q",
+      "cards": [
+        "Q♥",
+        "7♣"
+      ]
+    },
+    {
+      "type": "CHALLENGE_DECISION",
+      "challenger": 1,
+      "challenge": false
+    },
+    {
+      "type": "PLAY",
+      "player": 1,
+      "claim_rank": "Q",
+      "cards": [
+        "6♥"
+      ]
+    },
+    {
+      "type": "CHALLENGE_DECISION",
+      "challenger": 3,
+      "challenge": false
+    },
+    {
+      "type": "PLAY",
+      "player": 3,
+      "claim_rank": "Q",
+      "cards": [
+        "Q♣",
+        "8♣"
+      ]
+    },
+    {
+      "type": "CHALLENGE_DECISION",
+      "challenger": 1,
+      "challenge": false
+    },
+    {
+      "type": "PLAY",
+      "player": 1,
+      "claim_rank": "Q",
+      "cards": [
+        "Q♦",
+        "10♦"
+      ]
+    },
+    {
+      "type": "CHALLENGE_DECISION",
+      "challenger": 3,
+      "challenge": false
+    },
+    {
+      "type": "PLAY",
+      "player": 3,
+      "claim_rank": "Q",
+      "cards": [
+        "K♥",
+        "J♥",
+        "4♥"
+      ]
+    },
+    {
+      "type": "CHALLENGE_DECISION",
+      "challenger": 1,
+      "challenge": false
+    },
+    {
+      "type": "PLAY",
+      "player": 1,
+      "claim_rank": "Q",
+      "cards": [
+        "8♦",
+        "K♣",
+        "6♠"
+      ]
+    },
+    {
+      "type": "CHALLENGE_DECISION",
+      "challenger": 3,
+      "challenge": true
+    },
+    {
+      "type": "CHALLENGE_RESOLUTION",
+      "challenger": 3,
+      "truthful": false,
+      "revealed": [
+        "8♦",
+        "K♣",
+        "6♠"
+      ]
+    },
+    {
+      "type": "PICKUP_PILE",
+      "player": 1,
+      "cards": [
+        "10♠",
+        "7♥",
+        "8♥",
+        "Q♥",
+        "7♣",
+        "6♥",
+        "Q♣",
+        "8♣",
+        "Q♦",
+        "10♦",
+        "K♥",
+        "J♥",
+        "4♥",
+        "8♦",
+        "K♣",
+        "6♠"
+      ]
+    },
+    {
+      "type": "DISCARD_QUAD",
+      "player": 1,
+      "rank": "J",
+      "cards": [
+        "J♣",
+        "J♦",
+        "J♠",
+        "J♥"
+      ]
+    },
+    {
+      "type": "DISCARD_QUAD",
+      "player": 1,
+      "rank": "Q",
+      "cards": [
+        "Q♠",
+        "Q♥",
+        "Q♣",
+        "Q♦"
+      ]
+    },
+    {
+      "type": "SELECT_RANK",
+      "player": 3,
+      "rank": "10"
+    },
+    {
+      "type": "PLAY",
+      "player": 3,
+      "claim_rank": "10",
+      "cards": [
+        "10♣",
+        "8♠",
+        "4♣"
+      ]
+    },
+    {
+      "type": "CHALLENGE_DECISION",
+      "challenger": 1,
+      "challenge": false
+    },
+    {
+      "type": "PLAY",
+      "player": 1,
+      "claim_rank": "10",
+      "cards": [
+        "K♣"
+      ]
+    },
+    {
+      "type": "CHALLENGE_DECISION",
+      "challenger": 3,
+      "challenge": false
+    },
+    {
+      "type": "PLAY",
+      "player": 3,
+      "claim_rank": "10",
+      "cards": [
+        "6♣",
+        "7♠"
+      ]
+    },
+    {
+      "type": "CHALLENGE_DECISION",
+      "challenger": 1,
+      "challenge": false
+    },
+    {
+      "type": "PLAY",
+      "player": 1,
+      "claim_rank": "10",
+      "cards": [
+        "K♥"
+      ]
+    },
+    {
+      "type": "CHALLENGE_DECISION",
+      "challenger": 3,
+      "challenge": true
+    },
+    {
+      "type": "CHALLENGE_RESOLUTION",
+      "challenger": 3,
+      "truthful": false,
+      "revealed": [
+        "K♥"
+      ]
+    },
+    {
+      "type": "PICKUP_PILE",
+      "player": 1,
+      "cards": [
+        "10♣",
+        "8♠",
+        "4♣",
+        "K♣",
+        "6♣",
+        "7♠",
+        "K♥"
+      ]
+    },
+    {
+      "type": "DISCARD_QUAD",
+      "player": 1,
+      "rank": "4",
+      "cards": [
+        "4♦",
+        "4♠",
+        "4♥",
+        "4♣"
+      ]
+    },
+    {
+      "type": "DISCARD_QUAD",
+      "player": 1,
+      "rank": "6",
+      "cards": [
+        "6♦",
+        "6♥",
+        "6♠",
+        "6♣"
+      ]
+    },
+    {
+      "type": "DISCARD_QUAD",
+      "player": 1,
+      "rank": "8",
+      "cards": [
+        "8♥",
+        "8♣",
+        "8♦",
+        "8♠"
+      ]
+    },
+    {
+      "type": "SELECT_RANK",
+      "player": 3,
+      "rank": "5"
+    },
+    {
+      "type": "PLAY",
+      "player": 3,
+      "claim_rank": "5",
+      "cards": [
+        "7♦",
+        "10♥",
+        "K♠"
+      ]
+    },
+    {
+      "type": "PLACEMENT",
+      "player": 3,
+      "place": 3
+    },
+    {
+      "type": "CHALLENGE_DECISION",
+      "challenger": 1,
+      "challenge": false
+    },
+    {
+      "type": "PLAY",
+      "player": 1,
+      "claim_rank": "5",
+      "cards": [
+        "7♣",
+        "10♦",
+        "K♥"
+      ]
+    },
+    {
+      "type": "CHALLENGE_DECISION",
+      "challenger": 1,
+      "challenge": true
+    },
+    {
+      "type": "CHALLENGE_RESOLUTION",
+      "challenger": 1,
+      "truthful": false,
+      "revealed": [
+        "7♣",
+        "10♦",
+        "K♥"
+      ]
+    },
+    {
+      "type": "PICKUP_PILE",
+      "player": 1,
+      "cards": [
+        "7♦",
+        "10♥",
+        "K♠",
+        "7♣",
+        "10♦",
+        "K♥"
+      ]
+    },
+    {
+      "type": "DISCARD_QUAD",
+      "player": 1,
+      "rank": "7",
+      "cards": [
+        "7♥",
+        "7♠",
+        "7♦",
+        "7♣"
+      ]
+    },
+    {
+      "type": "DISCARD_QUAD",
+      "player": 1,
+      "rank": "10",
+      "cards": [
+        "10♠",
+        "10♣",
+        "10♥",
+        "10♦"
+      ]
+    },
+    {
+      "type": "DISCARD_QUAD",
+      "player": 1,
+      "rank": "K",
+      "cards": [
+        "K♦",
+        "K♣",
+        "K♠",
+        "K♥"
+      ]
+    },
+    {
+      "type": "SELECT_RANK",
+      "player": 1,
+      "rank": "7"
+    },
+    {
+      "type": "PLAY",
+      "player": 1,
+      "claim_rank": "7",
+      "cards": [
+        "A♣",
+        "A♥",
+        "A♠"
+      ]
+    },
+    {
+      "type": "CHALLENGE_DECISION",
+      "challenger": 1,
+      "challenge": false
+    },
+    {
+      "type": "PLAY",
+      "player": 1,
+      "claim_rank": "7",
+      "cards": [
+        "A♦"
+      ]
+    },
+    {
+      "type": "PLACEMENT",
+      "player": 1,
+      "place": 4
+    },
+    {
+      "type": "CHALLENGE_DECISION",
+      "challenger": 1,
+      "challenge": false
+    },
+    {
+      "type": "GAME_END",
+      "placements": [
+        0,
+        2,
+        3,
+        1
+      ]
+    }
+  ],
+  "snapshots": [
+    {
+      "event_index": 10,
+      "state": {
+        "players": [
+          {
+            "hand": [
+              "4♠",
+              "8♥",
+              "3♦",
+              "10♦",
+              "J♦",
+              "9♠",
+              "2♥",
+              "8♣",
+              "Q♥",
+              "6♦"
+            ],
+            "bot": "heuristic",
+            "placement": null,
+            "discarded": []
+          },
+          {
+            "hand": [
+              "6♥",
+              "2♣",
+              "K♦",
+              "9♣",
+              "K♣",
+              "2♠",
+              "6♠",
+              "8♦",
+              "Q♠",
+              "4♦",
+              "J♣",
+              "A♦",
+              "A♠",
+              "A♥",
+              "7♥",
+              "2♦"
+            ],
+            "bot": "random",
+            "placement": null,
+            "discarded": []
+          },
+          {
+            "hand": [
+              "4♣",
+              "K♥",
+              "A♣",
+              "J♥",
+              "3♠",
+              "Q♦",
+              "10♠",
+              "7♠",
+              "9♥",
+              "8♠"
+            ],
+            "bot": "heuristic",
+            "placement": null,
+            "discarded": []
+          },
+          {
+            "hand": [
+              "3♥",
+              "Q♣",
+              "7♣",
+              "10♥",
+              "3♣",
+              "5♣",
+              "4♥",
+              "6♣",
+              "J♠",
+              "7♦",
+              "9♦",
+              "10♣",
+              "K♠"
+            ],
+            "bot": "random",
+            "placement": null,
+            "discarded": []
+          }
+        ],
+        "active_rank": "5",
+        "pile": [
+          "5♦",
+          "5♠",
+          "5♥"
+        ],
+        "current_player": 2,
+        "placements": []
+      }
+    },
+    {
+      "event_index": 20,
+      "state": {
+        "players": [
+          {
+            "hand": [
+              "4♠",
+              "3♦",
+              "10♦",
+              "J♦",
+              "9♠",
+              "2♥",
+              "Q♥",
+              "6♦"
+            ],
+            "bot": "heuristic",
+            "placement": null,
+            "discarded": []
+          },
+          {
+            "hand": [
+              "6♥",
+              "2♣",
+              "K♦",
+              "9♣",
+              "K♣",
+              "6♠",
+              "8♦",
+              "Q♠",
+              "4♦",
+              "J♣",
+              "A♦",
+              "A♥",
+              "7♥",
+              "2♦"
+            ],
+            "bot": "random",
+            "placement": null,
+            "discarded": []
+          },
+          {
+            "hand": [
+              "4♣",
+              "K♥",
+              "A♣",
+              "J♥",
+              "3♠",
+              "Q♦",
+              "10♠",
+              "7♠",
+              "9♥",
+              "8♠"
+            ],
+            "bot": "heuristic",
+            "placement": null,
+            "discarded": []
+          },
+          {
+            "hand": [
+              "3♥",
+              "Q♣",
+              "7♣",
+              "10♥",
+              "4♥",
+              "6♣",
+              "J♠",
+              "7♦",
+              "9♦",
+              "10♣",
+              "K♠",
+              "3♣"
+            ],
+            "bot": "random",
+            "placement": null,
+            "discarded": [
+              "5♣",
+              "5♦",
+              "5♠",
+              "5♥"
+            ]
+          }
+        ],
+        "active_rank": "8",
+        "pile": [
+          "8♥",
+          "8♣",
+          "A♠",
+          "2♠"
+        ],
+        "current_player": 1,
+        "placements": []
+      }
+    },
+    {
+      "event_index": 30,
+      "state": {
+        "players": [
+          {
+            "hand": [
+              "4♠",
+              "3♦",
+              "10♦",
+              "J♦",
+              "9♠",
+              "2♥",
+              "Q♥",
+              "6♦"
+            ],
+            "bot": "heuristic",
+            "placement": null,
+            "discarded": []
+          },
+          {
+            "hand": [
+              "6♥",
+              "2♣",
+              "K♦",
+              "9♣",
+              "K♣",
+              "6♠",
+              "8♦",
+              "Q♠",
+              "4♦",
+              "J♣",
+              "A♦",
+              "A♥",
+              "7♥",
+              "2♦",
+              "8♥",
+              "8♣",
+              "A♠",
+              "2♠"
+            ],
+            "bot": "random",
+            "placement": null,
+            "discarded": []
+          },
+          {
+            "hand": [
+              "4♣",
+              "K♥",
+              "A♣",
+              "J♥",
+              "Q♦",
+              "10♠",
+              "7♠",
+              "9♥",
+              "8♠"
+            ],
+            "bot": "heuristic",
+            "placement": null,
+            "discarded": []
+          },
+          {
+            "hand": [
+              "3♥",
+              "Q♣",
+              "10♥",
+              "6♣",
+              "J♠",
+              "7♦",
+              "9♦",
+              "10♣",
+              "K♠",
+              "3♣",
+              "3♠",
+              "7♣",
+              "4♥"
+            ],
+            "bot": "random",
+            "placement": null,
+            "discarded": [
+              "5♣",
+              "5♦",
+              "5♠",
+              "5♥"
+            ]
+          }
+        ],
+        "active_rank": null,
+        "pile": [],
+        "current_player": 0,
+        "placements": []
+      }
+    },
+    {
+      "event_index": 40,
+      "state": {
+        "players": [
+          {
+            "hand": [
+              "4♠",
+              "3♦",
+              "J♦",
+              "9♠",
+              "2♥",
+              "Q♥",
+              "6♦"
+            ],
+            "bot": "heuristic",
+            "placement": null,
+            "discarded": []
+          },
+          {
+            "hand": [
+              "6♥",
+              "2♣",
+              "K♦",
+              "9♣",
+              "K♣",
+              "6♠",
+              "8♦",
+              "Q♠",
+              "4♦",
+              "J♣",
+              "A♦",
+              "7♥",
+              "2♦",
+              "8♥",
+              "8♣",
+              "A♠",
+              "2♠",
+              "10♦",
+              "A♥"
+            ],
+            "bot": "random",
+            "placement": null,
+            "discarded": []
+          },
+          {
+            "hand": [
+              "4♣",
+              "K♥",
+              "A♣",
+              "J♥",
+              "Q♦",
+              "10♠",
+              "7♠",
+              "9♥"
+            ],
+            "bot": "heuristic",
+            "placement": null,
+            "discarded": []
+          },
+          {
+            "hand": [
+              "3♥",
+              "Q♣",
+              "10♥",
+              "6♣",
+              "J♠",
+              "7♦",
+              "9♦",
+              "10♣",
+              "K♠",
+              "3♣",
+              "3♠",
+              "7♣",
+              "4♥"
+            ],
+            "bot": "random",
+            "placement": null,
+            "discarded": [
+              "5♣",
+              "5♦",
+              "5♠",
+              "5♥"
+            ]
+          }
+        ],
+        "active_rank": "8",
+        "pile": [
+          "8♠"
+        ],
+        "current_player": 3,
+        "placements": []
+      }
+    },
+    {
+      "event_index": 50,
+      "state": {
+        "players": [
+          {
+            "hand": [
+              "4♠",
+              "3♦",
+              "J♦",
+              "9♠",
+              "Q♥",
+              "6♦"
+            ],
+            "bot": "heuristic",
+            "placement": null,
+            "discarded": []
+          },
+          {
+            "hand": [
+              "6♥",
+              "2♣",
+              "K♦",
+              "9♣",
+              "6♠",
+              "Q♠",
+              "4♦",
+              "A♦",
+              "7♥",
+              "2♦",
+              "8♥",
+              "8♣",
+              "A♠",
+              "2♠",
+              "10♦",
+              "A♥"
+            ],
+            "bot": "random",
+            "placement": null,
+            "discarded": []
+          },
+          {
+            "hand": [
+              "4♣",
+              "K♥",
+              "A♣",
+              "J♥",
+              "Q♦",
+              "10♠",
+              "7♠",
+              "9♥"
+            ],
+            "bot": "heuristic",
+            "placement": null,
+            "discarded": []
+          },
+          {
+            "hand": [
+              "3♥",
+              "Q♣",
+              "10♥",
+              "6♣",
+              "J♠",
+              "7♦",
+              "9♦",
+              "10♣",
+              "K♠",
+              "3♣",
+              "7♣",
+              "4♥",
+              "8♠",
+              "3♠"
+            ],
+            "bot": "random",
+            "placement": null,
+            "discarded": [
+              "5♣",
+              "5♦",
+              "5♠",
+              "5♥"
+            ]
+          }
+        ],
+        "active_rank": "2",
+        "pile": [
+          "2♥",
+          "J♣",
+          "K♣",
+          "8♦"
+        ],
+        "current_player": 1,
+        "placements": []
+      }
+    },
+    {
+      "event_index": 60,
+      "state": {
+        "players": [
+          {
+            "hand": [
+              "4♠",
+              "3♦",
+              "J♦",
+              "9♠",
+              "Q♥",
+              "6♦"
+            ],
+            "bot": "heuristic",
+            "placement": null,
+            "discarded": []
+          },
+          {
+            "hand": [
+              "6♥",
+              "K♦",
+              "9♣",
+              "6♠",
+              "Q♠",
+              "4♦",
+              "A♦",
+              "7♥",
+              "8♥",
+              "8♣",
+              "A♠",
+              "10♦",
+              "A♥",
+              "J♣",
+              "K♣",
+              "8♦"
+            ],
+            "bot": "random",
+            "placement": null,
+            "discarded": [
+              "2♣",
+              "2♦",
+              "2♠",
+              "2♥"
+            ]
+          },
+          {
+            "hand": [
+              "K♥",
+              "A♣",
+              "J♥",
+              "Q♦",
+              "10♠",
+              "7♠",
+              "9♥"
+            ],
+            "bot": "heuristic",
+            "placement": null,
+            "discarded": []
+          },
+          {
+            "hand": [
+              "3♥",
+              "10♥",
+              "6♣",
+              "J♠",
+              "7♦",
+              "9♦",
+              "10♣",
+              "K♠",
+              "7♣",
+              "4♥",
+              "3♠",
+              "4♣",
+              "Q♣",
+              "3♣",
+              "8♠"
+            ],
+            "bot": "random",
+            "placement": null,
+            "discarded": [
+              "5♣",
+              "5♦",
+              "5♠",
+              "5♥"
+            ]
+          }
+        ],
+        "active_rank": "6",
+        "pile": [],
+        "current_player": 0,
+        "placements": []
+      }
+    },
+    {
+      "event_index": 70,
+      "state": {
+        "players": [
+          {
+            "hand": [
+              "4♠",
+              "3♦",
+              "J♦",
+              "9♠",
+              "Q♥"
+            ],
+            "bot": "heuristic",
+            "placement": null,
+            "discarded": []
+          },
+          {
+            "hand": [
+              "6♥",
+              "K♦",
+              "9♣",
+              "6♠",
+              "Q♠",
+              "4♦",
+              "A♦",
+              "7♥",
+              "8♥",
+              "8♣",
+              "10♦",
+              "J♣",
+              "K♣",
+              "8♦",
+              "6♦",
+              "A♠",
+              "A♥"
+            ],
+            "bot": "random",
+            "placement": null,
+            "discarded": [
+              "2♣",
+              "2♦",
+              "2♠",
+              "2♥"
+            ]
+          },
+          {
+            "hand": [
+              "A♣",
+              "J♥",
+              "Q♦",
+              "10♠",
+              "7♠",
+              "9♥"
+            ],
+            "bot": "heuristic",
+            "placement": null,
+            "discarded": []
+          },
+          {
+            "hand": [
+              "10♥",
+              "J♠",
+              "7♦",
+              "9♦",
+              "10♣",
+              "K♠",
+              "7♣",
+              "4♥",
+              "4♣",
+              "Q♣",
+              "3♣",
+              "8♠"
+            ],
+            "bot": "random",
+            "placement": null,
+            "discarded": [
+              "5♣",
+              "5♦",
+              "5♠",
+              "5♥"
+            ]
+          }
+        ],
+        "active_rank": "K",
+        "pile": [
+          "K♥",
+          "3♠",
+          "6♣",
+          "3♥"
+        ],
+        "current_player": 3,
+        "placements": []
+      }
+    },
+    {
+      "event_index": 80,
+      "state": {
+        "players": [
+          {
+            "hand": [
+              "4♠",
+              "3♦",
+              "J♦",
+              "9♠"
+            ],
+            "bot": "heuristic",
+            "placement": null,
+            "discarded": []
+          },
+          {
+            "hand": [
+              "6♥",
+              "K♦",
+              "9♣",
+              "6♠",
+              "Q♠",
+              "A♦",
+              "7♥",
+              "8♣",
+              "10♦",
+              "J♣",
+              "K♣",
+              "8♦",
+              "6♦",
+              "A♥",
+              "Q♥",
+              "A♠",
+              "8♥",
+              "4♦"
+            ],
+            "bot": "random",
+            "placement": null,
+            "discarded": [
+              "2♣",
+              "2♦",
+              "2♠",
+              "2♥"
+            ]
+          },
+          {
+            "hand": [
+              "A♣",
+              "J♥",
+              "Q♦",
+              "10♠",
+              "7♠",
+              "9♥"
+            ],
+            "bot": "heuristic",
+            "placement": null,
+            "discarded": []
+          },
+          {
+            "hand": [
+              "10♥",
+              "J♠",
+              "7♦",
+              "9♦",
+              "10♣",
+              "K♠",
+              "7♣",
+              "4♥",
+              "4♣",
+              "Q♣",
+              "3♣",
+              "8♠",
+              "K♥",
+              "3♠",
+              "6♣",
+              "3♥"
+            ],
+            "bot": "random",
+            "placement": null,
+            "discarded": [
+              "5♣",
+              "5♦",
+              "5♠",
+              "5♥"
+            ]
+          }
+        ],
+        "active_rank": null,
+        "pile": [],
+        "current_player": 2,
+        "placements": []
+      }
+    },
+    {
+      "event_index": 90,
+      "state": {
+        "players": [
+          {
+            "hand": [
+              "4♠",
+              "3♦",
+              "J♦"
+            ],
+            "bot": "heuristic",
+            "placement": null,
+            "discarded": []
+          },
+          {
+            "hand": [
+              "6♥",
+              "K♦",
+              "9♣",
+              "6♠",
+              "Q♠",
+              "A♦",
+              "7♥",
+              "8♣",
+              "10♦",
+              "J♣",
+              "K♣",
+              "8♦",
+              "6♦",
+              "A♥",
+              "Q♥",
+              "A♠",
+              "8♥",
+              "4♦"
+            ],
+            "bot": "random",
+            "placement": null,
+            "discarded": [
+              "2♣",
+              "2♦",
+              "2♠",
+              "2♥"
+            ]
+          },
+          {
+            "hand": [
+              "A♣",
+              "J♥",
+              "Q♦",
+              "10♠",
+              "9♥"
+            ],
+            "bot": "heuristic",
+            "placement": null,
+            "discarded": []
+          },
+          {
+            "hand": [
+              "10♥",
+              "J♠",
+              "7♦",
+              "9♦",
+              "10♣",
+              "7♣",
+              "4♥",
+              "4♣",
+              "Q♣",
+              "3♣",
+              "8♠",
+              "K♥",
+              "6♣",
+              "3♥",
+              "7♠",
+              "3♠",
+              "K♠"
+            ],
+            "bot": "random",
+            "placement": null,
+            "discarded": [
+              "5♣",
+              "5♦",
+              "5♠",
+              "5♥"
+            ]
+          }
+        ],
+        "active_rank": "9",
+        "pile": [
+          "9♠"
+        ],
+        "current_player": 1,
+        "placements": []
+      }
+    },
+    {
+      "event_index": 100,
+      "state": {
+        "players": [
+          {
+            "hand": [
+              "4♠",
+              "3♦",
+              "J♦"
+            ],
+            "bot": "heuristic",
+            "placement": null,
+            "discarded": []
+          },
+          {
+            "hand": [
+              "6♥",
+              "9♣",
+              "6♠",
+              "Q♠",
+              "7♥",
+              "8♣",
+              "10♦",
+              "J♣",
+              "K♣",
+              "8♦",
+              "6♦",
+              "A♥",
+              "A♠",
+              "8♥",
+              "4♦",
+              "9♠",
+              "A♦",
+              "K♦",
+              "Q♥"
+            ],
+            "bot": "random",
+            "placement": null,
+            "discarded": [
+              "2♣",
+              "2♦",
+              "2♠",
+              "2♥"
+            ]
+          },
+          {
+            "hand": [
+              "A♣",
+              "Q♦",
+              "10♠",
+              "9♥"
+            ],
+            "bot": "heuristic",
+            "placement": null,
+            "discarded": []
+          },
+          {
+            "hand": [
+              "10♥",
+              "J♠",
+              "7♦",
+              "9♦",
+              "10♣",
+              "7♣",
+              "4♣",
+              "Q♣",
+              "3♣",
+              "K♥",
+              "6♣",
+              "3♥",
+              "7♠",
+              "3♠"
+            ],
+            "bot": "random",
+            "placement": null,
+            "discarded": [
+              "5♣",
+              "5♦",
+              "5♠",
+              "5♥"
+            ]
+          }
+        ],
+        "active_rank": "J",
+        "pile": [
+          "J♥",
+          "8♠",
+          "4♥",
+          "K♠"
+        ],
+        "current_player": 3,
+        "placements": []
+      }
+    },
+    {
+      "event_index": 110,
+      "state": {
+        "players": [
+          {
+            "hand": [
+              "4♠",
+              "3♦"
+            ],
+            "bot": "heuristic",
+            "placement": null,
+            "discarded": []
+          },
+          {
+            "hand": [
+              "6♥",
+              "9♣",
+              "6♠",
+              "Q♠",
+              "7♥",
+              "8♣",
+              "10♦",
+              "J♣",
+              "K♣",
+              "8♦",
+              "6♦",
+              "A♠",
+              "8♥",
+              "4♦",
+              "9♠",
+              "A♦",
+              "K♦",
+              "Q♥",
+              "J♦",
+              "A♥"
+            ],
+            "bot": "random",
+            "placement": null,
+            "discarded": [
+              "2♣",
+              "2♦",
+              "2♠",
+              "2♥"
+            ]
+          },
+          {
+            "hand": [
+              "A♣",
+              "Q♦",
+              "9♥"
+            ],
+            "bot": "heuristic",
+            "placement": null,
+            "discarded": []
+          },
+          {
+            "hand": [
+              "10♥",
+              "J♠",
+              "7♦",
+              "9♦",
+              "10♣",
+              "7♣",
+              "4♣",
+              "Q♣",
+              "3♣",
+              "K♥",
+              "6♣",
+              "3♥",
+              "7♠",
+              "3♠",
+              "J♥",
+              "8♠",
+              "4♥",
+              "K♠"
+            ],
+            "bot": "random",
+            "placement": null,
+            "discarded": [
+              "5♣",
+              "5♦",
+              "5♠",
+              "5♥"
+            ]
+          }
+        ],
+        "active_rank": "10",
+        "pile": [
+          "10♠"
+        ],
+        "current_player": 2,
+        "placements": []
+      }
+    },
+    {
+      "event_index": 120,
+      "state": {
+        "players": [
+          {
+            "hand": [
+              "3♦"
+            ],
+            "bot": "heuristic",
+            "placement": null,
+            "discarded": []
+          },
+          {
+            "hand": [
+              "6♥",
+              "9♣",
+              "6♠",
+              "Q♠",
+              "7♥",
+              "8♣",
+              "10♦",
+              "J♣",
+              "8♦",
+              "6♦",
+              "A♠",
+              "8♥",
+              "4♦",
+              "9♠",
+              "K♦",
+              "Q♥",
+              "J♦",
+              "A♥"
+            ],
+            "bot": "random",
+            "placement": null,
+            "discarded": [
+              "2♣",
+              "2♦",
+              "2♠",
+              "2♥"
+            ]
+          },
+          {
+            "hand": [
+              "A♣",
+              "Q♦",
+              "9♥"
+            ],
+            "bot": "heuristic",
+            "placement": null,
+            "discarded": []
+          },
+          {
+            "hand": [
+              "10♥",
+              "J♠",
+              "7♦",
+              "9♦",
+              "10♣",
+              "7♣",
+              "4♣",
+              "Q♣",
+              "3♣",
+              "K♥",
+              "6♣",
+              "3♥",
+              "7♠",
+              "3♠",
+              "J♥",
+              "8♠",
+              "K♠",
+              "10♠",
+              "4♥"
+            ],
+            "bot": "random",
+            "placement": null,
+            "discarded": [
+              "5♣",
+              "5♦",
+              "5♠",
+              "5♥"
+            ]
+          }
+        ],
+        "active_rank": "4",
+        "pile": [
+          "4♠",
+          "K♣",
+          "A♦"
+        ],
+        "current_player": 1,
+        "placements": []
+      }
+    },
+    {
+      "event_index": 130,
+      "state": {
+        "players": [
+          {
+            "hand": [
+              "3♦"
+            ],
+            "bot": "heuristic",
+            "placement": null,
+            "discarded": []
+          },
+          {
+            "hand": [
+              "6♥",
+              "9♣",
+              "6♠",
+              "Q♠",
+              "7♥",
+              "8♣",
+              "10♦",
+              "J♣",
+              "8♦",
+              "6♦",
+              "A♠",
+              "8♥",
+              "4♦",
+              "9♠",
+              "K♦",
+              "Q♥",
+              "J♦",
+              "A♥",
+              "4♠",
+              "K♣",
+              "A♦"
+            ],
+            "bot": "random",
+            "placement": null,
+            "discarded": [
+              "2♣",
+              "2♦",
+              "2♠",
+              "2♥"
+            ]
+          },
+          {
+            "hand": [
+              "A♣",
+              "Q♦"
+            ],
+            "bot": "heuristic",
+            "placement": null,
+            "discarded": []
+          },
+          {
+            "hand": [
+              "10♥",
+              "J♠",
+              "7♦",
+              "9♦",
+              "10♣",
+              "7♣",
+              "4♣",
+              "Q♣",
+              "3♣",
+              "K♥",
+              "6♣",
+              "3♥",
+              "7♠",
+              "J♥",
+              "8♠",
+              "K♠",
+              "4♥",
+              "9♥",
+              "10♠",
+              "3♠"
+            ],
+            "bot": "random",
+            "placement": null,
+            "discarded": [
+              "5♣",
+              "5♦",
+              "5♠",
+              "5♥"
+            ]
+          }
+        ],
+        "active_rank": "3",
+        "pile": [],
+        "current_player": 0,
+        "placements": []
+      }
+    },
+    {
+      "event_index": 140,
+      "state": {
+        "players": [
+          {
+            "hand": [],
+            "bot": "heuristic",
+            "placement": 1,
+            "discarded": []
+          },
+          {
+            "hand": [
+              "6♥",
+              "9♣",
+              "6♠",
+              "Q♠",
+              "7♥",
+              "10♦",
+              "J♣",
+              "8♦",
+              "6♦",
+              "A♠",
+              "4♦",
+              "9♠",
+              "K♦",
+              "Q♥",
+              "J♦",
+              "A♥",
+              "4♠",
+              "K♣",
+              "A♦"
+            ],
+            "bot": "random",
+            "placement": null,
+            "discarded": [
+              "2♣",
+              "2♦",
+              "2♠",
+              "2♥"
+            ]
+          },
+          {
+            "hand": [
+              "Q♦"
+            ],
+            "bot": "heuristic",
+            "placement": null,
+            "discarded": []
+          },
+          {
+            "hand": [
+              "10♥",
+              "7♦",
+              "9♦",
+              "10♣",
+              "7♣",
+              "4♣",
+              "Q♣",
+              "3♣",
+              "K♥",
+              "6♣",
+              "3♥",
+              "7♠",
+              "J♥",
+              "8♠",
+              "K♠",
+              "4♥",
+              "9♥",
+              "10♠",
+              "3♠"
+            ],
+            "bot": "random",
+            "placement": null,
+            "discarded": [
+              "5♣",
+              "5♦",
+              "5♠",
+              "5♥"
+            ]
+          }
+        ],
+        "active_rank": "3",
+        "pile": [
+          "3♦",
+          "A♣",
+          "J♠",
+          "8♥",
+          "8♣"
+        ],
+        "current_player": 1,
+        "placements": [
+          0
+        ]
+      }
+    },
+    {
+      "event_index": 150,
+      "state": {
+        "players": [
+          {
+            "hand": [],
+            "bot": "heuristic",
+            "placement": 1,
+            "discarded": []
+          },
+          {
+            "hand": [
+              "6♥",
+              "9♣",
+              "6♠",
+              "Q♠",
+              "7♥",
+              "10♦",
+              "J♣",
+              "8♦",
+              "6♦",
+              "A♠",
+              "4♦",
+              "9♠",
+              "K♦",
+              "J♦",
+              "A♥",
+              "4♠",
+              "K♣",
+              "A♦",
+              "3♦",
+              "A♣",
+              "J♠",
+              "8♥"
+            ],
+            "bot": "random",
+            "placement": null,
+            "discarded": [
+              "2♣",
+              "2♦",
+              "2♠",
+              "2♥"
+            ]
+          },
+          {
+            "hand": [],
+            "bot": "heuristic",
+            "placement": 2,
+            "discarded": []
+          },
+          {
+            "hand": [
+              "10♥",
+              "7♦",
+              "9♦",
+              "10♣",
+              "7♣",
+              "4♣",
+              "Q♣",
+              "3♣",
+              "K♥",
+              "6♣",
+              "7♠",
+              "J♥",
+              "8♠",
+              "K♠",
+              "4♥",
+              "9♥",
+              "10♠",
+              "3♠"
+            ],
+            "bot": "random",
+            "placement": null,
+            "discarded": [
+              "5♣",
+              "5♦",
+              "5♠",
+              "5♥"
+            ]
+          }
+        ],
+        "active_rank": "Q",
+        "pile": [
+          "Q♦",
+          "8♣",
+          "3♥",
+          "Q♥"
+        ],
+        "current_player": 1,
+        "placements": [
+          0,
+          2
+        ]
+      }
+    },
+    {
+      "event_index": 160,
+      "state": {
+        "players": [
+          {
+            "hand": [],
+            "bot": "heuristic",
+            "placement": 1,
+            "discarded": []
+          },
+          {
+            "hand": [
+              "6♥",
+              "9♣",
+              "6♠",
+              "Q♠",
+              "7♥",
+              "10♦",
+              "J♣",
+              "8♦",
+              "6♦",
+              "A♠",
+              "4♦",
+              "9♠",
+              "K♦",
+              "J♦",
+              "A♥",
+              "4♠",
+              "K♣",
+              "A♦",
+              "A♣",
+              "J♠",
+              "8♥"
+            ],
+            "bot": "random",
+            "placement": null,
+            "discarded": [
+              "2♣",
+              "2♦",
+              "2♠",
+              "2♥"
+            ]
+          },
+          {
+            "hand": [],
+            "bot": "heuristic",
+            "placement": 2,
+            "discarded": []
+          },
+          {
+            "hand": [
+              "10♥",
+              "7♦",
+              "10♣",
+              "7♣",
+              "Q♣",
+              "6♣",
+              "7♠",
+              "8♠",
+              "K♠",
+              "4♥",
+              "9♥",
+              "10♠",
+              "Q♦",
+              "8♣",
+              "Q♥",
+              "4♣",
+              "9♦",
+              "J♥",
+              "K♥"
+            ],
+            "bot": "random",
+            "placement": null,
+            "discarded": [
+              "5♣",
+              "5♦",
+              "5♠",
+              "5♥",
+              "3♣",
+              "3♠",
+              "3♥",
+              "3♦"
+            ]
+          }
+        ],
+        "active_rank": null,
+        "pile": [],
+        "current_player": 1,
+        "placements": [
+          0,
+          2
+        ]
+      }
+    },
+    {
+      "event_index": 170,
+      "state": {
+        "players": [
+          {
+            "hand": [],
+            "bot": "heuristic",
+            "placement": 1,
+            "discarded": []
+          },
+          {
+            "hand": [
+              "9♣",
+              "6♠",
+              "Q♠",
+              "7♥",
+              "10♦",
+              "J♣",
+              "8♦",
+              "6♦",
+              "4♦",
+              "9♠",
+              "J♦",
+              "A♥",
+              "4♠",
+              "K♣",
+              "A♦",
+              "A♣",
+              "J♠",
+              "8♥",
+              "K♦",
+              "A♠"
+            ],
+            "bot": "random",
+            "placement": null,
+            "discarded": [
+              "2♣",
+              "2♦",
+              "2♠",
+              "2♥"
+            ]
+          },
+          {
+            "hand": [],
+            "bot": "heuristic",
+            "placement": 2,
+            "discarded": []
+          },
+          {
+            "hand": [
+              "10♥",
+              "7♦",
+              "10♣",
+              "7♣",
+              "Q♣",
+              "6♣",
+              "7♠",
+              "8♠",
+              "K♠",
+              "4♥",
+              "10♠",
+              "8♣",
+              "Q♥",
+              "4♣",
+              "J♥",
+              "K♥"
+            ],
+            "bot": "random",
+            "placement": null,
+            "discarded": [
+              "5♣",
+              "5♦",
+              "5♠",
+              "5♥",
+              "3♣",
+              "3♠",
+              "3♥",
+              "3♦"
+            ]
+          }
+        ],
+        "active_rank": "J",
+        "pile": [
+          "9♥",
+          "Q♦",
+          "9♦",
+          "6♥"
+        ],
+        "current_player": 1,
+        "placements": [
+          0,
+          2
+        ]
+      }
+    },
+    {
+      "event_index": 180,
+      "state": {
+        "players": [
+          {
+            "hand": [],
+            "bot": "heuristic",
+            "placement": 1,
+            "discarded": []
+          },
+          {
+            "hand": [
+              "6♠",
+              "Q♠",
+              "10♦",
+              "J♣",
+              "8♦",
+              "6♦",
+              "4♦",
+              "J♦",
+              "A♥",
+              "4♠",
+              "K♣",
+              "A♦",
+              "A♣",
+              "J♠",
+              "K♦",
+              "A♠",
+              "Q♦",
+              "6♥"
+            ],
+            "bot": "random",
+            "placement": null,
+            "discarded": [
+              "2♣",
+              "2♦",
+              "2♠",
+              "2♥",
+              "9♣",
+              "9♠",
+              "9♥",
+              "9♦"
+            ]
+          },
+          {
+            "hand": [],
+            "bot": "heuristic",
+            "placement": 2,
+            "discarded": []
+          },
+          {
+            "hand": [
+              "10♥",
+              "7♦",
+              "10♣",
+              "Q♣",
+              "6♣",
+              "7♠",
+              "8♠",
+              "K♠",
+              "4♥",
+              "8♣",
+              "4♣",
+              "J♥",
+              "K♥"
+            ],
+            "bot": "random",
+            "placement": null,
+            "discarded": [
+              "5♣",
+              "5♦",
+              "5♠",
+              "5♥",
+              "3♣",
+              "3♠",
+              "3♥",
+              "3♦"
+            ]
+          }
+        ],
+        "active_rank": "Q",
+        "pile": [
+          "10♠",
+          "7♥",
+          "8♥",
+          "Q♥",
+          "7♣"
+        ],
+        "current_player": 1,
+        "placements": [
+          0,
+          2
+        ]
+      }
+    },
+    {
+      "event_index": 190,
+      "state": {
+        "players": [
+          {
+            "hand": [],
+            "bot": "heuristic",
+            "placement": 1,
+            "discarded": []
+          },
+          {
+            "hand": [
+              "Q♠",
+              "J♣",
+              "6♦",
+              "4♦",
+              "J♦",
+              "A♥",
+              "4♠",
+              "A♦",
+              "A♣",
+              "J♠",
+              "K♦",
+              "A♠"
+            ],
+            "bot": "random",
+            "placement": null,
+            "discarded": [
+              "2♣",
+              "2♦",
+              "2♠",
+              "2♥",
+              "9♣",
+              "9♠",
+              "9♥",
+              "9♦"
+            ]
+          },
+          {
+            "hand": [],
+            "bot": "heuristic",
+            "placement": 2,
+            "discarded": []
+          },
+          {
+            "hand": [
+              "10♥",
+              "7♦",
+              "10♣",
+              "6♣",
+              "7♠",
+              "8♠",
+              "K♠",
+              "4♣"
+            ],
+            "bot": "random",
+            "placement": null,
+            "discarded": [
+              "5♣",
+              "5♦",
+              "5♠",
+              "5♥",
+              "3♣",
+              "3♠",
+              "3♥",
+              "3♦"
+            ]
+          }
+        ],
+        "active_rank": "Q",
+        "pile": [
+          "10♠",
+          "7♥",
+          "8♥",
+          "Q♥",
+          "7♣",
+          "6♥",
+          "Q♣",
+          "8♣",
+          "Q♦",
+          "10♦",
+          "K♥",
+          "J♥",
+          "4♥",
+          "8♦",
+          "K♣",
+          "6♠"
+        ],
+        "current_player": 1,
+        "placements": [
+          0,
+          2
+        ]
+      }
+    },
+    {
+      "event_index": 200,
+      "state": {
+        "players": [
+          {
+            "hand": [],
+            "bot": "heuristic",
+            "placement": 1,
+            "discarded": []
+          },
+          {
+            "hand": [
+              "6♦",
+              "4♦",
+              "A♥",
+              "4♠",
+              "A♦",
+              "A♣",
+              "K♦",
+              "A♠",
+              "10♠",
+              "7♥",
+              "8♥",
+              "7♣",
+              "6♥",
+              "8♣",
+              "10♦",
+              "K♥",
+              "4♥",
+              "8♦",
+              "6♠"
+            ],
+            "bot": "random",
+            "placement": null,
+            "discarded": [
+              "2♣",
+              "2♦",
+              "2♠",
+              "2♥",
+              "9♣",
+              "9♠",
+              "9♥",
+              "9♦",
+              "J♣",
+              "J♦",
+              "J♠",
+              "J♥",
+              "Q♠",
+              "Q♥",
+              "Q♣",
+              "Q♦"
+            ]
+          },
+          {
+            "hand": [],
+            "bot": "heuristic",
+            "placement": 2,
+            "discarded": []
+          },
+          {
+            "hand": [
+              "10♥",
+              "7♦",
+              "K♠"
+            ],
+            "bot": "random",
+            "placement": null,
+            "discarded": [
+              "5♣",
+              "5♦",
+              "5♠",
+              "5♥",
+              "3♣",
+              "3♠",
+              "3♥",
+              "3♦"
+            ]
+          }
+        ],
+        "active_rank": "10",
+        "pile": [
+          "10♣",
+          "8♠",
+          "4♣",
+          "K♣",
+          "6♣",
+          "7♠"
+        ],
+        "current_player": 3,
+        "placements": [
+          0,
+          2
+        ]
+      }
+    },
+    {
+      "event_index": 210,
+      "state": {
+        "players": [
+          {
+            "hand": [],
+            "bot": "heuristic",
+            "placement": 1,
+            "discarded": []
+          },
+          {
+            "hand": [
+              "A♥",
+              "A♦",
+              "A♣",
+              "K♦",
+              "A♠",
+              "10♠",
+              "7♥",
+              "7♣",
+              "10♦",
+              "10♣",
+              "K♣",
+              "7♠",
+              "K♥"
+            ],
+            "bot": "random",
+            "placement": null,
+            "discarded": [
+              "2♣",
+              "2♦",
+              "2♠",
+              "2♥",
+              "9♣",
+              "9♠",
+              "9♥",
+              "9♦",
+              "J♣",
+              "J♦",
+              "J♠",
+              "J♥",
+              "Q♠",
+              "Q♥",
+              "Q♣",
+              "Q♦",
+              "4♦",
+              "4♠",
+              "4♥",
+              "4♣",
+              "6♦",
+              "6♥",
+              "6♠",
+              "6♣",
+              "8♥",
+              "8♣",
+              "8♦",
+              "8♠"
+            ]
+          },
+          {
+            "hand": [],
+            "bot": "heuristic",
+            "placement": 2,
+            "discarded": []
+          },
+          {
+            "hand": [],
+            "bot": "random",
+            "placement": null,
+            "discarded": [
+              "5♣",
+              "5♦",
+              "5♠",
+              "5♥",
+              "3♣",
+              "3♠",
+              "3♥",
+              "3♦"
+            ]
+          }
+        ],
+        "active_rank": "5",
+        "pile": [
+          "7♦",
+          "10♥",
+          "K♠"
+        ],
+        "current_player": 3,
+        "placements": [
+          0,
+          2
+        ]
+      }
+    },
+    {
+      "event_index": 220,
+      "state": {
+        "players": [
+          {
+            "hand": [],
+            "bot": "heuristic",
+            "placement": 1,
+            "discarded": []
+          },
+          {
+            "hand": [
+              "A♥",
+              "A♦",
+              "A♣",
+              "A♠"
+            ],
+            "bot": "random",
+            "placement": null,
+            "discarded": [
+              "2♣",
+              "2♦",
+              "2♠",
+              "2♥",
+              "9♣",
+              "9♠",
+              "9♥",
+              "9♦",
+              "J♣",
+              "J♦",
+              "J♠",
+              "J♥",
+              "Q♠",
+              "Q♥",
+              "Q♣",
+              "Q♦",
+              "4♦",
+              "4♠",
+              "4♥",
+              "4♣",
+              "6♦",
+              "6♥",
+              "6♠",
+              "6♣",
+              "8♥",
+              "8♣",
+              "8♦",
+              "8♠",
+              "7♥",
+              "7♠",
+              "7♦",
+              "7♣",
+              "10♠",
+              "10♣",
+              "10♥",
+              "10♦",
+              "K♦",
+              "K♣",
+              "K♠",
+              "K♥"
+            ]
+          },
+          {
+            "hand": [],
+            "bot": "heuristic",
+            "placement": 2,
+            "discarded": []
+          },
+          {
+            "hand": [],
+            "bot": "random",
+            "placement": 3,
+            "discarded": [
+              "5♣",
+              "5♦",
+              "5♠",
+              "5♥",
+              "3♣",
+              "3♠",
+              "3♥",
+              "3♦"
+            ]
+          }
+        ],
+        "active_rank": "7",
+        "pile": [],
+        "current_player": 1,
+        "placements": [
+          0,
+          2,
+          3
+        ]
+      }
+    }
+  ]
+}

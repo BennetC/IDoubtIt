@@ -8,6 +8,24 @@ A command-line simulator for the card game **Lying** (a.k.a. Cheat). It supports
 python main.py --players 4 --bots heuristic random heuristic random --games 1 --seed 123 --verbose
 ```
 
+### Save a Replay
+
+```bash
+python main.py --players 4 --bots heuristic random heuristic random --seed 123 --games 1 --save-replay replays/game_123.json
+```
+
+### Run the Replay Web UI
+
+```bash
+python webapp.py --replays-dir replays --port 8000
+```
+
+Open `http://localhost:8000` in a browser to explore the replay.
+
+### Sample Replay
+
+The repository includes `replays/sample_game_123.json` as a demo replay for the web UI.
+
 ### CLI Options
 
 - `--players`: number of players (2–6)
