@@ -79,20 +79,6 @@ class RuleInvariantTests(unittest.TestCase):
         self.assertEqual(len(state.players[0].hand), 0)
         self.assertEqual(state.players[0].placement, 1)
 
-    def test_challenge_failure_counts(self):
-        bot0 = ScriptedBot([([Card("2", "♣")], "2")], [])
-        bot1 = ScriptedBot([], [True])
-        game = Game([bot0, bot1])
-        state = game.setup()
-        state.players[0].hand = [Card("2", "♣")]
-        state.players[1].hand = [Card("3", "♦")]
-        state.active_rank = "2"
-        game._take_turn(state, 0, [0, 1], verbose=False)
-        stats = state.challenge_stats["scripted"]
-        self.assertEqual(stats["attempts"], 1)
-        self.assertEqual(stats["success"], 0)
-        self.assertEqual(stats["failure"], 1)
-
 
 if __name__ == "__main__":
     unittest.main()

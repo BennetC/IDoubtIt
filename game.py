@@ -60,8 +60,7 @@ class Game:
         challenge_stats: Dict[str, Dict[str, int]] = {}
         for bot in self.players:
             challenge_stats.setdefault(
-                bot.name,
-                {"opportunities": 0, "attempts": 0, "success": 0, "failure": 0},
+                bot.name, {"opportunities": 0, "attempts": 0, "success": 0}
             )
         return GameState(
             players=state_players,
@@ -71,20 +70,23 @@ class Game:
 
     def play_game(self, verbose: bool = False) -> GameState:
         state = self.setup()
+        active_order = list(range(len(state.players)))
         state.current_player = 0
         self._resolve_discard_quads(state, verbose)
         while len(state.placements) < len(state.players):
-            active_order = state.active_players()
             if not active_order:
                 break
-            if state.current_player not in active_order:
-                state.current_player = active_order[0]
-            current_idx = state.current_player
+            current_idx = active_order[state.current_player]
             player = state.players[current_idx]
             if player.placement is not None:
-                state.current_player = self._next_player(state, active_order, current_idx) or current_idx
+                state.current_player = (state.current_player + 1) % len(active_order)
                 continue
             self._take_turn(state, current_idx, active_order, verbose)
+            active_order = [idx for idx in active_order if state.players[idx].placement is None]
+            if not active_order:
+                break
+            if state.current_player >= len(active_order):
+                state.current_player = 0
         if len(state.placements) < len(state.players):
             remaining = [idx for idx in range(len(state.players)) if idx not in state.placements]
             for idx in remaining:
@@ -113,9 +115,7 @@ class Game:
             chosen_rank = player.bot.choose_active_rank(player.hand, public)
             state.active_rank = chosen_rank
             if verbose:
-                state.add_log(
-                    f"{self._label(player_idx, state)} selects active rank {chosen_rank}."
-                )
+                state.add_log(f"P{player_idx} selects active rank {chosen_rank}.")
         public = PublicState(
             active_rank=state.active_rank,
             pile_size=len(state.pile),
@@ -139,13 +139,12 @@ class Game:
         state.turn_count += 1
         if verbose:
             state.add_log(
-                f"{self._label(player_idx, state)} plays {len(played_cards)} "
-                f"claiming {claim_rank} (pile={len(state.pile)})"
+                f"P{player_idx} plays {len(played_cards)} claiming {claim_rank} (pile={len(state.pile)})"
             )
             self._log_hand_sizes(state)
         self._check_wins(state, verbose)
         self._resolve_discard_quads(state, verbose)
-        next_player_idx = self._next_player(state, active_order, player_idx)
+        next_player_idx = self._next_player(active_order, player_idx)
         if next_player_idx is None:
             return
         next_player = state.players[next_player_idx]
@@ -165,17 +164,9 @@ class Game:
             truthful = all(card.rank == state.active_rank for card in played_cards)
             if not truthful:
                 state.challenge_stats[next_player.bot.name]["success"] += 1
-            else:
-                state.challenge_stats[next_player.bot.name]["failure"] += 1
-            stats = state.challenge_stats[next_player.bot.name]
-            if stats["attempts"] != stats["success"] + stats["failure"]:
-                raise AssertionError("Challenge stats mismatch")
             if verbose:
-                outcome = "truthful play" if truthful else "lie"
-                challenge_correct = "False" if truthful else "True"
                 state.add_log(
-                    f"{self._label(next_player_idx, state)} challenges -> "
-                    f"challenge_correct={challenge_correct} ({outcome})"
+                    f"P{next_player_idx} challenges -> {'TRUTH' if truthful else 'LIE'}"
                 )
                 revealed = ", ".join(str(card) for card in played_cards)
                 state.add_log(f"Revealed: {revealed}")
@@ -190,38 +181,27 @@ class Game:
             state.players[picker].hand.extend(state.pile)
             state.pile.clear()
             if verbose:
-                state.add_log(
-                    f"{self._label(picker, state)} picks up {pickup_size} cards. Pile cleared."
-                )
+                state.add_log(f"P{picker} picks up {pickup_size} cards. Pile cleared.")
                 self._log_hand_sizes(state)
             state.active_rank = None
             self._check_wins(state, verbose)
             self._resolve_discard_quads(state, verbose)
-            next_turn_player = self._next_player(state, active_order, picker)
+            next_turn_player = self._next_player(active_order, picker)
             if next_turn_player is None:
                 return
-            state.current_player = next_turn_player
+            state.current_player = active_order.index(next_turn_player)
         else:
             if verbose:
-                state.add_log(f"{self._label(next_player_idx, state)} does not challenge.")
-            state.current_player = next_player_idx
+                state.add_log(f"P{next_player_idx} does not challenge.")
+            state.current_player = (state.current_player + 1) % len(active_order)
 
-    def _next_player(
-        self, state: GameState, active_order: List[int], current_idx: int
-    ) -> Optional[int]:
+    def _next_player(self, active_order: List[int], current_idx: int) -> Optional[int]:
         if not active_order:
             return None
         if current_idx not in active_order:
-            start_idx = 0
-        else:
-            start_idx = active_order.index(current_idx) + 1
-        for offset in range(len(active_order)):
-            idx = active_order[(start_idx + offset) % len(active_order)]
-            if idx == current_idx:
-                continue
-            if state.players[idx].placement is None:
-                return idx
-        return None
+            return active_order[0]
+        idx = active_order.index(current_idx)
+        return active_order[(idx + 1) % len(active_order)]
 
     def _resolve_discard_quads(self, state: GameState, verbose: bool) -> None:
         changed = True
@@ -242,7 +222,7 @@ class Game:
                         state.known_discarded[rank] += 4
                         changed = True
                         if verbose:
-                            state.add_log(f"{self._label(idx, state)} discards four {rank}s.")
+                            state.add_log(f"P{idx} discards four {rank}s.")
                             self._log_hand_sizes(state)
                         self._check_wins(state, verbose)
                         break
@@ -255,16 +235,8 @@ class Game:
                 state.placements.append(idx)
                 player.placement = len(state.placements)
                 if verbose:
-                    state.add_log(
-                        f"{self._label(idx, state)} finishes in place {player.placement}."
-                    )
+                    state.add_log(f"P{idx} finishes in place {player.placement}.")
 
     def _log_hand_sizes(self, state: GameState) -> None:
-        sizes = " ".join(
-            f"{self._label(idx, state)}:{len(player.hand)}"
-            for idx, player in enumerate(state.players)
-        )
+        sizes = " ".join(f"P{idx}:{len(player.hand)}" for idx, player in enumerate(state.players))
         state.add_log(f"Hand sizes -> {sizes}")
-
-    def _label(self, idx: int, state: GameState) -> str:
-        return f"P{idx}({state.players[idx].bot.name})"

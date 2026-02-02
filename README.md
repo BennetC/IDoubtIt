@@ -21,41 +21,41 @@ python main.py --players 4 --bots heuristic random heuristic random --games 1 --
 ### Successful challenge (lie caught)
 
 ```
-P0(random) plays 1 claiming 2 (pile=1)
-Hand sizes -> P0(random):0 P1(heuristic):1
-P0(random) finishes in place 1.
-P1(heuristic) challenges -> challenge_correct=True (lie)
+P0 plays 1 claiming 2 (pile=1)
+Hand sizes -> P0:0 P1:1
+P0 finishes in place 1.
+P1 challenges -> LIE
 Revealed: 3♣
-P0(random) picks up 1 cards. Pile cleared.
-Hand sizes -> P0(random):1 P1(heuristic):1
+P0 picks up 1 cards. Pile cleared.
+Hand sizes -> P0:1 P1:1
 ```
 
 ### Failed challenge (truthful play)
 
 ```
-P0(random) plays 1 claiming 2 (pile=1)
-Hand sizes -> P0(random):0 P1(heuristic):1
-P0(random) finishes in place 1.
-P1(heuristic) challenges -> challenge_correct=False (truthful play)
+P0 plays 1 claiming 2 (pile=1)
+Hand sizes -> P0:0 P1:1
+P0 finishes in place 1.
+P1 challenges -> TRUTH
 Revealed: 2♣
-P1(heuristic) picks up 1 cards. Pile cleared.
-Hand sizes -> P0(random):0 P1(heuristic):2
+P1 picks up 1 cards. Pile cleared.
+Hand sizes -> P0:0 P1:2
 ```
 
 ### Pickup → multiple quad discards → instant win
 
 ```
-P0(random) plays 1 claiming 2 (pile=3)
-Hand sizes -> P0(random):5 P1(heuristic):1
-P1(heuristic) challenges -> challenge_correct=True (lie)
+P0 plays 1 claiming 2 (pile=3)
+Hand sizes -> P0:5 P1:1
+P1 challenges -> LIE
 Revealed: 5♥
-P0(random) picks up 3 cards. Pile cleared.
-Hand sizes -> P0(random):8 P1(heuristic):1
-P0(random) discards four 5s.
-Hand sizes -> P0(random):4 P1(heuristic):1
-P0(random) discards four 6s.
-Hand sizes -> P0(random):0 P1(heuristic):1
-P0(random) finishes in place 1.
+P0 picks up 3 cards. Pile cleared.
+Hand sizes -> P0:8 P1:1
+P0 discards four 5s.
+Hand sizes -> P0:4 P1:1
+P0 discards four 6s.
+Hand sizes -> P0:0 P1:1
+P0 finishes in place 1.
 ```
 
 ## Tests
