@@ -1,13 +1,16 @@
 from __future__ import annotations
 
 import argparse
+import json
 import random
 from collections import defaultdict
+from pathlib import Path
 from statistics import mean
-from typing import Dict, List
+from typing import Dict, List, Optional
 
 from bots import BOT_TYPES, BotBase
 from game import Game
+from replay import ReplayRecorder, build_metadata
 
 
 def parse_args() -> argparse.Namespace:
@@ -17,6 +20,9 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--seed", type=int, default=None, help="Random seed")
     parser.add_argument("--games", type=int, default=1, help="Number of games to run")
     parser.add_argument("--verbose", action="store_true", help="Verbose turn-by-turn log")
+    parser.add_argument(
+        "--save-replay", type=str, default=None, help="Path to save replay JSON"
+    )
     return parser.parse_args()
 
 
@@ -32,6 +38,18 @@ def build_bots(bot_names: List[str], rng: random.Random) -> List[BotBase]:
 
 def default_bots(num_players: int) -> List[str]:
     return ["random"] * num_players
+
+
+def replay_path(base_path: str, game_idx: int, total_games: int) -> Path:
+    path = Path(base_path)
+    if total_games <= 1:
+        return path
+    suffix = f"_game{game_idx + 1}"
+    return path.with_name(f"{path.stem}{suffix}{path.suffix}")
+
+
+def json_dump(payload: Dict[str, object]) -> str:
+    return json.dumps(payload, indent=2, ensure_ascii=False)
 
 
 def main() -> None:
@@ -57,8 +75,17 @@ def main() -> None:
     for game_idx in range(args.games):
         rng_seed = master_rng.randint(0, 1_000_000)
         bots = build_bots(bot_names, random.Random(rng_seed))
-        game = Game(bots, rng_seed=rng_seed)
+        recorder: Optional[ReplayRecorder] = None
+        if args.save_replay:
+            metadata = build_metadata(rng_seed, args.players, [bot.name for bot in bots])
+            recorder = ReplayRecorder(metadata=metadata, snapshot_interval=10)
+        game = Game(bots, rng_seed=rng_seed, recorder=recorder)
         state = game.play_game(verbose=args.verbose)
+        if recorder is not None:
+            replay_data = recorder.build_replay()
+            output_path = replay_path(args.save_replay, game_idx, args.games)
+            output_path.parent.mkdir(parents=True, exist_ok=True)
+            output_path.write_text(json_dump(replay_data), encoding="utf-8")
         if args.verbose:
             print(f"=== Game {game_idx + 1} ===")
             for event in state.log:

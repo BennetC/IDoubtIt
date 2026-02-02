@@ -5,6 +5,7 @@ from typing import Dict, List, Optional
 
 from cards import Card, Deck, RANKS
 from bots import BotBase, PublicState
+from replay import ReplayRecorder, build_initial_state
 
 
 @dataclass
@@ -45,9 +46,15 @@ class GameState:
 
 
 class Game:
-    def __init__(self, players: List[BotBase], rng_seed: Optional[int] = None) -> None:
+    def __init__(
+        self,
+        players: List[BotBase],
+        rng_seed: Optional[int] = None,
+        recorder: Optional[ReplayRecorder] = None,
+    ) -> None:
         self.rng_seed = rng_seed
         self.players = players
+        self.recorder = recorder
 
     def setup(self) -> GameState:
         import random
@@ -70,6 +77,11 @@ class Game:
 
     def play_game(self, verbose: bool = False) -> GameState:
         state = self.setup()
+        if self.recorder is not None:
+            bot_types = [player.bot.name for player in state.players]
+            initial_state = build_initial_state([player.hand for player in state.players], bot_types)
+            self.recorder.set_initial_state(initial_state)
+            self.recorder.record_event("GAME_START")
         active_order = list(range(len(state.players)))
         state.current_player = 0
         self._resolve_discard_quads(state, verbose)
@@ -92,6 +104,12 @@ class Game:
             for idx in remaining:
                 state.placements.append(idx)
                 state.players[idx].placement = len(state.placements)
+                if self.recorder is not None:
+                    self.recorder.record_event(
+                        "PLACEMENT", player=idx, place=state.players[idx].placement
+                    )
+        if self.recorder is not None:
+            self.recorder.record_event("GAME_END", placements=state.placements)
         return state
 
     def _take_turn(
@@ -116,6 +134,8 @@ class Game:
             state.active_rank = chosen_rank
             if verbose:
                 state.add_log(f"P{player_idx} selects active rank {chosen_rank}.")
+            if self.recorder is not None:
+                self.recorder.record_event("SELECT_RANK", player=player_idx, rank=chosen_rank)
         public = PublicState(
             active_rank=state.active_rank,
             pile_size=len(state.pile),
@@ -142,6 +162,10 @@ class Game:
                 f"P{player_idx} plays {len(played_cards)} claiming {claim_rank} (pile={len(state.pile)})"
             )
             self._log_hand_sizes(state)
+        if self.recorder is not None:
+            self.recorder.record_event(
+                "PLAY", player=player_idx, claim_rank=claim_rank, cards=played_cards
+            )
         self._check_wins(state, verbose)
         self._resolve_discard_quads(state, verbose)
         next_player_idx = self._next_player(active_order, player_idx)
@@ -159,6 +183,10 @@ class Game:
         )
         state.challenge_stats[next_player.bot.name]["opportunities"] += 1
         challenge = next_player.bot.should_challenge(next_player.hand, public_after_play)
+        if self.recorder is not None:
+            self.recorder.record_event(
+                "CHALLENGE_DECISION", challenger=next_player_idx, challenge=challenge
+            )
         if challenge:
             state.challenge_stats[next_player.bot.name]["attempts"] += 1
             truthful = all(card.rank == state.active_rank for card in played_cards)
@@ -170,6 +198,13 @@ class Game:
                 )
                 revealed = ", ".join(str(card) for card in played_cards)
                 state.add_log(f"Revealed: {revealed}")
+            if self.recorder is not None:
+                self.recorder.record_event(
+                    "CHALLENGE_RESOLUTION",
+                    challenger=next_player_idx,
+                    truthful=truthful,
+                    revealed=played_cards,
+                )
             for card in played_cards:
                 state.known_revealed[card.rank] += 1
             if truthful:
@@ -178,6 +213,8 @@ class Game:
                 picker = player_idx
             pickup_size = len(state.pile)
             state.pile_pickups.append(pickup_size)
+            if self.recorder is not None:
+                self.recorder.record_event("PICKUP_PILE", player=picker, cards=state.pile.copy())
             state.players[picker].hand.extend(state.pile)
             state.pile.clear()
             if verbose:
@@ -224,6 +261,10 @@ class Game:
                         if verbose:
                             state.add_log(f"P{idx} discards four {rank}s.")
                             self._log_hand_sizes(state)
+                        if self.recorder is not None:
+                            self.recorder.record_event(
+                                "DISCARD_QUAD", player=idx, rank=rank, cards=cards
+                            )
                         self._check_wins(state, verbose)
                         break
                 if changed:
@@ -236,6 +277,10 @@ class Game:
                 player.placement = len(state.placements)
                 if verbose:
                     state.add_log(f"P{idx} finishes in place {player.placement}.")
+                if self.recorder is not None:
+                    self.recorder.record_event(
+                        "PLACEMENT", player=idx, place=player.placement
+                    )
 
     def _log_hand_sizes(self, state: GameState) -> None:
         sizes = " ".join(f"P{idx}:{len(player.hand)}" for idx, player in enumerate(state.players))
