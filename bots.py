@@ -126,6 +126,21 @@ class HeuristicBot(BotBase):
         return expected_gain > risk
 
 
+class HumanWebPlayer(BotBase):
+    name = "human"
+
+    def choose_active_rank(self, hand: List[Card], public: PublicState) -> str:
+        raise RuntimeError("HumanWebPlayer requires web input for active rank.")
+
+    def choose_play(
+        self, hand: List[Card], public: PublicState
+    ) -> Tuple[List[Card], str]:
+        raise RuntimeError("HumanWebPlayer requires web input for play.")
+
+    def should_challenge(self, hand: List[Card], public: PublicState) -> bool:
+        raise RuntimeError("HumanWebPlayer requires web input for challenge.")
+
+
 BOT_TYPES = {
     "random": RandomBot,
     "heuristic": HeuristicBot,

@@ -8,7 +8,11 @@
 </head>
 <body>
   <header class="topbar">
-    <div class="controls">
+    <div class="tabs">
+      <button class="tab active" data-tab="replay">Replay</button>
+      <button class="tab" data-tab="play">Play</button>
+    </div>
+    <div id="replay-controls" class="controls">
       <label>
         Replay
         <select id="replay-select"></select>
@@ -35,36 +39,120 @@
         Public view
       </label>
     </div>
+    <div id="play-controls" class="controls hidden">
+      <label>
+        Players
+        <select id="play-player-count">
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4" selected>4</option>
+          <option value="5">5</option>
+          <option value="6">6</option>
+        </select>
+      </label>
+      <label>
+        Human Seat
+        <select id="play-human-seat"></select>
+      </label>
+      <label>
+        Bot Type
+        <select id="play-bot-type">
+          <option value="random" selected>random</option>
+          <option value="heuristic">heuristic</option>
+        </select>
+      </label>
+      <label>
+        Seed
+        <input id="play-seed" type="number" placeholder="optional" />
+      </label>
+      <div class="buttons">
+        <button id="play-start">Start New Game</button>
+        <button id="play-pause">Pause</button>
+        <button id="play-resume">Resume</button>
+        <button id="play-stop">Stop Game</button>
+      </div>
+      <label>
+        Save Name
+        <input id="play-save-name" type="text" placeholder="my-save" />
+      </label>
+      <button id="play-save">Save Game</button>
+      <label>
+        Saves
+        <select id="play-save-select"></select>
+      </label>
+      <button id="play-load">Load Game</button>
+      <label class="toggle">
+        <input type="checkbox" id="play-debug-toggle" />
+        Debug view
+      </label>
+    </div>
     <input id="step-slider" type="range" min="0" max="0" value="0" />
   </header>
 
-  <main class="layout">
-    <section class="panel left">
-      <h2>Current Event</h2>
-      <div id="event-text" class="event-text">Load a replay to begin.</div>
-      <div class="state-list">
-        <div><strong>Active Rank:</strong> <span id="active-rank">-</span></div>
-        <div><strong>Current Turn:</strong> <span id="current-player">-</span></div>
-        <div><strong>Pile Size:</strong> <span id="pile-size">0</span></div>
-      </div>
-      <details class="history" open>
-        <summary>History</summary>
-        <ol id="history-list"></ol>
-      </details>
+  <main>
+    <section id="replay-view" class="layout">
+      <section class="panel left">
+        <h2>Current Event</h2>
+        <div id="event-text" class="event-text">Load a replay to begin.</div>
+        <div class="state-list">
+          <div><strong>Active Rank:</strong> <span id="active-rank">-</span></div>
+          <div><strong>Current Turn:</strong> <span id="current-player">-</span></div>
+          <div><strong>Pile Size:</strong> <span id="pile-size">0</span></div>
+        </div>
+        <details class="history" open>
+          <summary>History</summary>
+          <ol id="history-list"></ol>
+        </details>
+      </section>
+
+      <section class="panel center">
+        <h2>Pile</h2>
+        <div id="pile-cards" class="card-list"></div>
+      </section>
+
+      <section class="panel right">
+        <h2>Players</h2>
+        <div id="players"></div>
+      </section>
     </section>
 
-    <section class="panel center">
-      <h2>Pile</h2>
-      <div id="pile-cards" class="card-list"></div>
-    </section>
+    <section id="play-view" class="layout hidden">
+      <section class="panel left">
+        <h2>Game Status</h2>
+        <div id="play-status" class="event-text">Start a new game to begin.</div>
+        <div class="state-list">
+          <div><strong>Active Rank:</strong> <span id="play-active-rank">-</span></div>
+          <div><strong>Current Turn:</strong> <span id="play-current-player">-</span></div>
+          <div><strong>Pile Size:</strong> <span id="play-pile-size">0</span></div>
+        </div>
+        <div class="human-actions">
+          <h3>Human Action</h3>
+          <div id="play-decision" class="player-meta">Waiting for game start.</div>
+          <div id="play-rank-buttons" class="buttons wrap"></div>
+          <div id="play-hand" class="card-list"></div>
+          <button id="play-submit" class="hidden">Play Selected</button>
+          <div id="play-challenge-buttons" class="buttons wrap"></div>
+        </div>
+        <details class="history" open>
+          <summary>History</summary>
+          <ol id="play-history-list"></ol>
+        </details>
+      </section>
 
-    <section class="panel right">
-      <h2>Players</h2>
-      <div id="players"></div>
+      <section class="panel center">
+        <h2>Pile</h2>
+        <div id="play-pile-cards" class="card-list"></div>
+      </section>
+
+      <section class="panel right">
+        <h2>Players</h2>
+        <div id="play-players"></div>
+      </section>
     </section>
   </main>
 
   <div id="error-banner" class="error hidden"></div>
+  <div id="play-error-banner" class="error hidden"></div>
 
   <script src="app.js"></script>
 </body>
