@@ -199,6 +199,26 @@ body {
   overflow-y: auto;
 }
 
+.history-controls {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 6px;
+}
+
+.history-controls label {
+  font-size: 0.8rem;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.history-controls select {
+  padding: 4px 8px;
+  border-radius: 6px;
+  border: 1px solid #cfd0d7;
+  background: #fff;
+}
+
 #history-list {
   padding-left: 18px;
   font-size: 0.85rem;
@@ -214,6 +234,81 @@ body {
 #history-list li.active {
   font-weight: 700;
   color: #4a6cf7;
+}
+
+#play-history-list {
+  padding-left: 18px;
+  font-size: 0.85rem;
+  max-height: 220px;
+  overflow-y: auto;
+}
+
+#play-history-list li {
+  margin-bottom: 4px;
+}
+
+.recent-since-human {
+  background: #e7f7ea;
+  border-left: 3px solid #3fa65f;
+  padding-left: 6px;
+  border-radius: 4px;
+}
+
+.player-color-0 {
+  --player-color: #4a6cf7;
+}
+
+.player-color-1 {
+  --player-color: #f97316;
+}
+
+.player-color-2 {
+  --player-color: #10b981;
+}
+
+.player-color-3 {
+  --player-color: #a855f7;
+}
+
+.player-color-4 {
+  --player-color: #ef4444;
+}
+
+.player-color-5 {
+  --player-color: #14b8a6;
+}
+
+.player-color-0,
+.player-color-1,
+.player-color-2,
+.player-color-3,
+.player-color-4,
+.player-color-5 {
+  border-color: color-mix(in srgb, var(--player-color) 45%, #e3e3ea);
+}
+
+.player-color-0 .player-title,
+.player-color-1 .player-title,
+.player-color-2 .player-title,
+.player-color-3 .player-title,
+.player-color-4 .player-title,
+.player-color-5 .player-title {
+  color: var(--player-color);
+}
+
+#history-list li.player-color-0,
+#history-list li.player-color-1,
+#history-list li.player-color-2,
+#history-list li.player-color-3,
+#history-list li.player-color-4,
+#history-list li.player-color-5,
+#play-history-list li.player-color-0,
+#play-history-list li.player-color-1,
+#play-history-list li.player-color-2,
+#play-history-list li.player-color-3,
+#play-history-list li.player-color-4,
+#play-history-list li.player-color-5 {
+  color: var(--player-color);
 }
 
 .error {

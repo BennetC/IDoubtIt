@@ -17,6 +17,7 @@ const elements = {
   pileCards: document.getElementById("pile-cards"),
   players: document.getElementById("players"),
   historyList: document.getElementById("history-list"),
+  historyOrder: document.getElementById("history-order"),
   errorBanner: document.getElementById("error-banner"),
   btnStart: document.getElementById("btn-start"),
   btnPrev: document.getElementById("btn-prev"),
@@ -32,6 +33,7 @@ const elements = {
   playPileCards: document.getElementById("play-pile-cards"),
   playPlayers: document.getElementById("play-players"),
   playHistoryList: document.getElementById("play-history-list"),
+  playHistoryOrder: document.getElementById("play-history-order"),
   playDecision: document.getElementById("play-decision"),
   playRankButtons: document.getElementById("play-rank-buttons"),
   playHand: document.getElementById("play-hand"),
@@ -62,6 +64,16 @@ let playSession = null;
 let playEvents = [];
 let playSelectedCards = new Set();
 let playDebug = false;
+let historyOrder = "desc";
+let playHistoryOrder = "desc";
+let lastDecisionKey = null;
+
+function playerColorClass(playerId) {
+  if (playerId == null) {
+    return "";
+  }
+  return `player-color-${playerId % 6}`;
+}
 
 function cardColor(card) {
   const suit = card.slice(-1);
@@ -104,6 +116,7 @@ function renderSelectableCards(container, cards) {
   container.innerHTML = "";
   if (cards.length === 0) {
     container.innerHTML = "<em>No cards</em>";
+    updatePlaySubmitState();
     return;
   }
   const fragment = document.createDocumentFragment();
@@ -130,6 +143,14 @@ function renderSelectableCards(container, cards) {
     fragment.appendChild(span);
   }
   container.appendChild(fragment);
+  updatePlaySubmitState();
+}
+
+function updatePlaySubmitState() {
+  if (!elements.playSubmit) {
+    return;
+  }
+  elements.playSubmit.disabled = playSelectedCards.size === 0;
 }
 
 function describeEvent(event, index) {
@@ -163,6 +184,26 @@ function describeEvent(event, index) {
     default:
       return `Event ${index}: ${type}`;
   }
+}
+
+function primaryEventPlayer(event) {
+  if (!event) {
+    return null;
+  }
+  if (event.player != null) {
+    return event.player;
+  }
+  if (event.challenger != null) {
+    return event.challenger;
+  }
+  return null;
+}
+
+function decisionKey(decision) {
+  if (!decision) {
+    return null;
+  }
+  return `${decision.type}-${decision.player}`;
 }
 
 function buildInitialState(replay) {
@@ -333,6 +374,7 @@ function renderState(step) {
   state.players.forEach((player, idx) => {
     const wrapper = document.createElement("div");
     wrapper.className = "player";
+    wrapper.classList.add(playerColorClass(idx));
     if (state.current_player === idx) {
       wrapper.classList.add("current");
     }
@@ -362,16 +404,26 @@ function renderState(step) {
   });
 
   const historyItems = elements.historyList.querySelectorAll("li");
-  historyItems.forEach((item, index) => {
-    item.classList.toggle("active", index + 1 === step);
+  historyItems.forEach((item) => {
+    item.classList.toggle("active", Number(item.dataset.step) === step);
   });
 }
 
 function updateHistory() {
   elements.historyList.innerHTML = "";
-  replayData.events.forEach((event, idx) => {
+  const indices = replayData.events.map((_, idx) => idx);
+  if (historyOrder === "desc") {
+    indices.reverse();
+  }
+  indices.forEach((idx) => {
+    const event = replayData.events[idx];
     const item = document.createElement("li");
     item.textContent = `${idx + 1}. ${describeEvent(event, idx + 1)}`;
+    item.dataset.step = String(idx + 1);
+    const primaryPlayer = primaryEventPlayer(event);
+    if (primaryPlayer != null) {
+      item.classList.add(playerColorClass(primaryPlayer));
+    }
     item.addEventListener("click", () => {
       stopPlayback();
       setStep(idx + 1);
@@ -517,10 +569,32 @@ function appendPlayHistory(events) {
   for (const event of events) {
     playEvents.push(event);
   }
+}
+
+function renderPlayHistory() {
   elements.playHistoryList.innerHTML = "";
-  playEvents.forEach((event, idx) => {
+  const indices = playEvents.map((_, idx) => idx);
+  if (playHistoryOrder === "desc") {
+    indices.reverse();
+  }
+  const humanIndex = playSession?.human_index ?? null;
+  const lastHumanPlayIndex = playEvents.reduce((acc, event, idx) => {
+    if (event.type === "PLAY" && event.player === humanIndex) {
+      return idx;
+    }
+    return acc;
+  }, -1);
+  indices.forEach((idx) => {
+    const event = playEvents[idx];
     const item = document.createElement("li");
     item.textContent = `${idx + 1}. ${describeEvent(event, idx + 1)}`;
+    const primaryPlayer = primaryEventPlayer(event);
+    if (primaryPlayer != null) {
+      item.classList.add(playerColorClass(primaryPlayer));
+    }
+    if (lastHumanPlayIndex !== -1 && idx > lastHumanPlayIndex) {
+      item.classList.add("recent-since-human");
+    }
     elements.playHistoryList.appendChild(item);
   });
 }
@@ -539,6 +613,8 @@ function renderPlayState() {
     elements.playHand.innerHTML = "";
     elements.playChallengeButtons.innerHTML = "";
     elements.playSubmit.classList.add("hidden");
+    playSelectedCards = new Set();
+    lastDecisionKey = null;
     return;
   }
   const state = playDebug ? playSession.debug_state : playSession.public_state;
@@ -556,6 +632,7 @@ function renderPlayState() {
   state.players.forEach((player) => {
     const wrapper = document.createElement("div");
     wrapper.className = "player";
+    wrapper.classList.add(playerColorClass(player.id));
     if (state.current_player === player.id) {
       wrapper.classList.add("current");
     }
@@ -582,10 +659,16 @@ function renderPlayState() {
   });
 
   const decision = playSession.pending_decision;
+  const currentDecisionKey = decisionKey(decision);
+  if (currentDecisionKey !== lastDecisionKey) {
+    playSelectedCards = new Set();
+    lastDecisionKey = currentDecisionKey;
+  }
   elements.playRankButtons.innerHTML = "";
   elements.playHand.innerHTML = "";
   elements.playChallengeButtons.innerHTML = "";
   elements.playSubmit.classList.add("hidden");
+  updatePlaySubmitState();
   if (playSession.finished) {
     elements.playDecision.textContent = "Game over.";
     elements.playStatus.textContent = "Game over.";
@@ -625,7 +708,6 @@ function renderPlayState() {
   } else if (decision.type === "PLAY") {
     elements.playDecision.textContent = "Select 1-3 cards to play.";
     const human = state.players.find((player) => player.id === playSession.human_index);
-    playSelectedCards = new Set();
     renderSelectableCards(elements.playHand, human?.hand || []);
     elements.playSubmit.classList.remove("hidden");
   } else if (decision.type === "CHALLENGE") {
@@ -658,6 +740,7 @@ function renderPlayState() {
 function applyPlayResponse(data) {
   playSession = data;
   appendPlayHistory(data.events);
+  renderPlayHistory();
   if (data.replay_saved) {
     loadReplayList();
   }
@@ -707,6 +790,19 @@ function setupControls() {
     if (playTimer) {
       stopPlayback();
       startPlayback();
+    }
+  });
+  elements.historyOrder.addEventListener("change", (event) => {
+    historyOrder = event.target.value;
+    if (replayData) {
+      updateHistory();
+      renderState(currentStep);
+    }
+  });
+  elements.playHistoryOrder.addEventListener("change", (event) => {
+    playHistoryOrder = event.target.value;
+    if (playSession) {
+      renderPlayHistory();
     }
   });
   elements.replaySelect.addEventListener("change", (event) => {
