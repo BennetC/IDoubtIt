@@ -47,9 +47,40 @@ body {
   background: #fff;
 }
 
+.controls input {
+  padding: 6px 10px;
+  border-radius: 6px;
+  border: 1px solid #cfd0d7;
+  background: #fff;
+}
+
+.tabs {
+  display: flex;
+  gap: 8px;
+}
+
+.tab {
+  padding: 6px 14px;
+  border-radius: 999px;
+  border: 1px solid #cfd0d7;
+  background: #fff;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.tab.active {
+  background: #4a6cf7;
+  color: #fff;
+  border-color: #4a6cf7;
+}
+
 .buttons {
   display: flex;
   gap: 6px;
+}
+
+.buttons.wrap {
+  flex-wrap: wrap;
 }
 
 .toggle {
@@ -100,6 +131,11 @@ body {
   font-weight: 600;
 }
 
+.card.selected {
+  border-color: #4a6cf7;
+  box-shadow: 0 0 0 2px rgba(74, 108, 247, 0.2);
+}
+
 .card.red {
   color: #c0392b;
 }
@@ -136,6 +172,19 @@ body {
 .event-text {
   font-size: 0.95rem;
   margin-bottom: 12px;
+}
+
+.human-actions {
+  margin-bottom: 12px;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px dashed #d2d3db;
+  background: #f7f8ff;
+}
+
+.human-actions h3 {
+  margin: 0 0 8px;
+  font-size: 0.95rem;
 }
 
 .state-list {
@@ -176,6 +225,10 @@ body {
 }
 
 .error.hidden {
+  display: none;
+}
+
+.hidden {
   display: none;
 }
 
