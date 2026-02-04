@@ -24,7 +24,7 @@ class BotBase:
 
     def __init__(self, rng: random.Random) -> None:
         self.rng = rng
-        self.last_challenge_eval: Optional[ChallengeEval] = None
+        self.last_challenge_debug: Optional[str] = None
 
     def choose_active_rank(self, hand: List[Card], public: PublicState) -> str:
         raise NotImplementedError
@@ -76,17 +76,7 @@ def _known_out_of_play_total(public: PublicState) -> int:
     return sum(public.known_discarded.values()) + sum(public.known_revealed.values())
 
 
-class ChallengeEval(TypedDict):
-    p_truthful: float
-    u_challenge: float
-    u_pass: float
-    pile: int
-    k: int
-    my_active: int
-    opp_hand: int
-
-
-def _build_challenge_eval(
+def _format_challenge_debug(
     p_truthful: float,
     u_challenge: float,
     u_pass: float,
@@ -94,25 +84,11 @@ def _build_challenge_eval(
     k: int,
     my_count_active: int,
     opponent_hand_size: int,
-) -> ChallengeEval:
-    return {
-        "p_truthful": p_truthful,
-        "u_challenge": u_challenge,
-        "u_pass": u_pass,
-        "pile": pile_size,
-        "k": k,
-        "my_active": my_count_active,
-        "opp_hand": opponent_hand_size,
-    }
-
-
-def format_challenge_eval_line(eval_data: ChallengeEval) -> str:
+) -> str:
     return (
-        f"p_truthful={eval_data['p_truthful']:.2f}, "
-        f"U_challenge={eval_data['u_challenge']:.2f}, "
-        f"U_pass={eval_data['u_pass']:.2f}, "
-        f"pile={eval_data['pile']}, k={eval_data['k']}, "
-        f"my_active={eval_data['my_active']}, opp_hand={eval_data['opp_hand']}"
+        f"p_truthful={p_truthful:.2f}, U_challenge={u_challenge:.2f}, "
+        f"U_pass={u_pass:.2f}, pile={pile_size}, k={k}, "
+        f"my_active={my_count_active}, opp_hand={opponent_hand_size}"
     )
 
 
@@ -153,7 +129,7 @@ class RandomBot(BotBase):
         )
         u_challenge = pile_size * (1 - 2 * p_truthful)
         u_pass = 0.2 * pile_size - 0.5
-        self.last_challenge_eval = _build_challenge_eval(
+        self.last_challenge_debug = _format_challenge_debug(
             p_truthful,
             u_challenge,
             u_pass,
@@ -241,7 +217,7 @@ class HeuristicBot(BotBase):
             decision = False
         else:
             decision = u_challenge > u_pass
-        self.last_challenge_eval = _build_challenge_eval(
+        self.last_challenge_debug = _format_challenge_debug(
             p_truthful,
             u_challenge,
             u_pass,

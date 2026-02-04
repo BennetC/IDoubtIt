@@ -276,22 +276,14 @@ class GameSession:
             self.pending_decision = PendingDecision("CHALLENGE", next_player)
             return
         challenge = next_bot.should_challenge(self.state.players[next_player].hand, public_after_play)
-        eval_data = getattr(next_bot, "last_challenge_eval", None)
-        if eval_data:
-            self.bot_eval_events.append(
-                {"type": "CHALLENGE_DECISION", "challenger": next_player, "eval": eval_data}
-            )
-        if eval_data and self.record_eval_in_replay:
+        debug_line = getattr(next_bot, "last_challenge_debug", None)
+        if debug_line:
             self.recorder.record_event(
-                "CHALLENGE_DECISION",
-                challenger=next_player,
-                challenge=challenge,
-                eval=eval_data,
+                "CHALLENGE_EVAL", challenger=next_player, message=debug_line
             )
-        else:
-            self.recorder.record_event(
-                "CHALLENGE_DECISION", challenger=next_player, challenge=challenge
-            )
+        self.recorder.record_event(
+            "CHALLENGE_DECISION", challenger=next_player, challenge=challenge
+        )
         if challenge:
             self.state.challenge_stats[next_bot.name]["attempts"] += 1
             truthful = all(card.rank == self.state.active_rank for card in self.last_played_cards)

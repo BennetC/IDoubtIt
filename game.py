@@ -191,12 +191,17 @@ class Game:
         )
         state.challenge_stats[next_player.bot.name]["opportunities"] += 1
         challenge = next_player.bot.should_challenge(next_player.hand, public_after_play)
-        eval_data = getattr(next_player.bot, "last_challenge_eval", None)
-        if eval_data and self.debug_eval:
-            from bots import format_challenge_eval_line
-
-            state.add_debug_log(
-                f"P{next_player_idx} eval: {format_challenge_eval_line(eval_data)}"
+        debug_line = getattr(next_player.bot, "last_challenge_debug", None)
+        if debug_line:
+            if verbose:
+                state.add_log(f"Challenge eval: {debug_line}")
+            if self.recorder is not None:
+                self.recorder.record_event(
+                    "CHALLENGE_EVAL", challenger=next_player_idx, message=debug_line
+                )
+        if self.recorder is not None:
+            self.recorder.record_event(
+                "CHALLENGE_DECISION", challenger=next_player_idx, challenge=challenge
             )
         if self.recorder is not None:
             if eval_data and self.record_eval_in_replay:

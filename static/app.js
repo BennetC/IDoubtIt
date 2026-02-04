@@ -177,6 +177,8 @@ function describeEvent(event, index) {
       return event.challenge
         ? `P${event.challenger} challenges.`
         : `P${event.challenger} does not challenge.`;
+    case "CHALLENGE_EVAL":
+      return `P${event.challenger} eval: ${event.message}`;
     case "CHALLENGE_RESOLUTION":
       return event.truthful
         ? `Challenge resolved: truthful. Revealed ${event.revealed.join(", ")}.`
