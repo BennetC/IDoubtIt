@@ -259,6 +259,11 @@ class GameSession:
             self.pending_decision = PendingDecision("CHALLENGE", next_player)
             return
         challenge = next_bot.should_challenge(self.state.players[next_player].hand, public_after_play)
+        debug_line = getattr(next_bot, "last_challenge_debug", None)
+        if debug_line:
+            self.recorder.record_event(
+                "CHALLENGE_EVAL", challenger=next_player, message=debug_line
+            )
         self.recorder.record_event(
             "CHALLENGE_DECISION", challenger=next_player, challenge=challenge
         )

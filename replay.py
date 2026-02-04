@@ -173,6 +173,8 @@ def apply_event(state: ReplayState, event: Dict[str, Any]) -> None:
             challenger = event["challenger"]
             state.current_player = challenger
         return
+    if event_type == "CHALLENGE_EVAL":
+        return
     if event_type == "CHALLENGE_RESOLUTION":
         return
     if event_type == "PICKUP_PILE":
