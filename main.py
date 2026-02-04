@@ -21,7 +21,17 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--games", type=int, default=1, help="Number of games to run")
     parser.add_argument("--verbose", action="store_true", help="Verbose turn-by-turn log")
     parser.add_argument(
+        "--debug-eval",
+        action="store_true",
+        help="Print bot evaluation details (requires --verbose)",
+    )
+    parser.add_argument(
         "--save-replay", type=str, default=None, help="Path to save replay JSON"
+    )
+    parser.add_argument(
+        "--record-eval-in-replay",
+        action="store_true",
+        help="Store bot eval data in replay events",
     )
     return parser.parse_args()
 
@@ -79,7 +89,13 @@ def main() -> None:
         if args.save_replay:
             metadata = build_metadata(rng_seed, args.players, [bot.name for bot in bots])
             recorder = ReplayRecorder(metadata=metadata, snapshot_interval=10)
-        game = Game(bots, rng_seed=rng_seed, recorder=recorder)
+        game = Game(
+            bots,
+            rng_seed=rng_seed,
+            recorder=recorder,
+            debug_eval=args.verbose and args.debug_eval,
+            record_eval_in_replay=args.record_eval_in_replay,
+        )
         state = game.play_game(verbose=args.verbose)
         if recorder is not None:
             replay_data = recorder.build_replay()
@@ -90,6 +106,10 @@ def main() -> None:
             print(f"=== Game {game_idx + 1} ===")
             for event in state.log:
                 print(event.message)
+            if args.debug_eval and state.debug_eval_log:
+                print("=== Bot Eval ===")
+                for event in state.debug_eval_log:
+                    print(event.message)
             print("Placements:", state.placements)
         winner = state.placements[0]
         win_counts[state.players[winner].bot.name] += 1

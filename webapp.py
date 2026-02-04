@@ -17,6 +17,7 @@ from web_session import GameSession
 @dataclass
 class SessionStore:
     session: Optional[GameSession] = None
+    record_eval_in_replay: bool = False
 
 
 class ReplayRequestHandler(SimpleHTTPRequestHandler):
@@ -139,10 +140,11 @@ class ReplayRequestHandler(SimpleHTTPRequestHandler):
             human_index=human_index,
             bot_types=bot_types,
             seed=seed,
+            record_eval_in_replay=self.session_store.record_eval_in_replay,
         )
         self.session_store.session = session
         events = session.step()
-        self.send_json(session.build_response(events))
+        self.send_json(session.build_response(events, bot_eval=session.consume_bot_eval()))
 
     def handle_game_action(self) -> None:
         session = self.session_store.session
@@ -162,7 +164,7 @@ class ReplayRequestHandler(SimpleHTTPRequestHandler):
             if not session.pending_decision:
                 events.extend(session.step())
             replay_name = session.save_replay(self.replays_dir)
-            response = session.build_response(events)
+            response = session.build_response(events, bot_eval=session.consume_bot_eval())
             if replay_name:
                 response["replay_saved"] = replay_name
             self.send_json(response)
@@ -181,7 +183,7 @@ class ReplayRequestHandler(SimpleHTTPRequestHandler):
         try:
             events = session.step()
             replay_name = session.save_replay(self.replays_dir)
-            response = session.build_response(events)
+            response = session.build_response(events, bot_eval=session.consume_bot_eval())
             if replay_name:
                 response["replay_saved"] = replay_name
             self.send_json(response)
@@ -198,7 +200,7 @@ class ReplayRequestHandler(SimpleHTTPRequestHandler):
             self.send_json_error("Session mismatch", HTTPStatus.BAD_REQUEST)
             return
         session.paused = True
-        self.send_json(session.build_response([]))
+        self.send_json(session.build_response([], bot_eval=session.consume_bot_eval()))
 
     def handle_game_resume(self) -> None:
         session = self.session_store.session
@@ -211,7 +213,7 @@ class ReplayRequestHandler(SimpleHTTPRequestHandler):
             return
         session.paused = False
         events = session.step()
-        self.send_json(session.build_response(events))
+        self.send_json(session.build_response(events, bot_eval=session.consume_bot_eval()))
 
     def handle_game_stop(self) -> None:
         payload = self.read_json()
@@ -267,7 +269,7 @@ class ReplayRequestHandler(SimpleHTTPRequestHandler):
         session = GameSession.from_save_dict(save_data)
         self.session_store.session = session
         events = session.step()
-        self.send_json(session.build_response(events))
+        self.send_json(session.build_response(events, bot_eval=session.consume_bot_eval()))
 
     def read_json(self) -> Dict[str, object]:
         length = int(self.headers.get("Content-Length", "0"))
@@ -304,6 +306,11 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--saves-dir", type=str, default="saves", help="Save game folder")
     parser.add_argument("--port", type=int, default=8000, help="Port to listen on")
     parser.add_argument("--host", type=str, default="0.0.0.0", help="Host interface")
+    parser.add_argument(
+        "--record-eval-in-replay",
+        action="store_true",
+        help="Store bot eval data in replay events",
+    )
     return parser.parse_args()
 
 
@@ -312,7 +319,7 @@ def main() -> None:
     os.makedirs(args.replays_dir, exist_ok=True)
     os.makedirs(args.saves_dir, exist_ok=True)
     static_dir = os.path.join(os.path.dirname(__file__), "static")
-    session_store = SessionStore()
+    session_store = SessionStore(record_eval_in_replay=args.record_eval_in_replay)
     handler = lambda *handler_args, **handler_kwargs: ReplayRequestHandler(  # noqa: E731
         *handler_args,
         replays_dir=args.replays_dir,

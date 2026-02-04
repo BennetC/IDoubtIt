@@ -108,17 +108,21 @@ class GameSession:
         human_index: int,
         bot_types: List[str],
         seed: Optional[int],
+        record_eval_in_replay: bool = False,
     ) -> None:
         self.session_id = uuid.uuid4().hex
         self.seed = seed
         self.human_index = human_index
         self.bot_types = list(bot_types)
+        self.record_eval_in_replay = record_eval_in_replay
         self.paused = False
         self.finished = False
         self.pending_decision: Optional[PendingDecision] = None
         self.last_played_cards: List[Card] = []
         self.last_played_player: Optional[int] = None
         self.replay_saved = False
+        self.bot_eval_events: List[Dict[str, Any]] = []
+        self.bot_eval_cursor = 0
 
         master_rng = random.Random(seed)
         self.bot_rngs: List[Optional[random.Random]] = []
@@ -131,7 +135,12 @@ class GameSession:
         metadata = build_metadata(seed, player_count, [bot.name for bot in bots])
         self.recorder = ReplayRecorder(metadata=metadata, snapshot_interval=10)
 
-        self.engine = Game(bots, rng_seed=seed, recorder=self.recorder)
+        self.engine = Game(
+            bots,
+            rng_seed=seed,
+            recorder=self.recorder,
+            record_eval_in_replay=record_eval_in_replay,
+        )
         self.state = self.engine.setup()
         initial_state = build_initial_state([player.hand for player in self.state.players], bot_types)
         self.recorder.set_initial_state(initial_state)
@@ -200,7 +209,9 @@ class GameSession:
             "players": players,
         }
 
-    def build_response(self, events: List[Dict[str, Any]]) -> Dict[str, Any]:
+    def build_response(
+        self, events: List[Dict[str, Any]], bot_eval: Optional[List[Dict[str, Any]]] = None
+    ) -> Dict[str, Any]:
         return {
             "session_id": self.session_id,
             "human_index": self.human_index,
@@ -210,10 +221,16 @@ class GameSession:
             "paused": self.paused,
             "finished": self.finished,
             "events": events,
+            "bot_eval": bot_eval or [],
         }
 
     def _collect_new_events(self, before_idx: int) -> List[Dict[str, Any]]:
         return self.recorder.events[before_idx:]
+
+    def consume_bot_eval(self) -> List[Dict[str, Any]]:
+        entries = self.bot_eval_events[self.bot_eval_cursor :]
+        self.bot_eval_cursor = len(self.bot_eval_events)
+        return entries
 
     def _validate_play(self, player: PlayerState, cards: List[Card]) -> None:
         if not 1 <= len(cards) <= 3:
@@ -259,9 +276,22 @@ class GameSession:
             self.pending_decision = PendingDecision("CHALLENGE", next_player)
             return
         challenge = next_bot.should_challenge(self.state.players[next_player].hand, public_after_play)
-        self.recorder.record_event(
-            "CHALLENGE_DECISION", challenger=next_player, challenge=challenge
-        )
+        eval_data = getattr(next_bot, "last_challenge_eval", None)
+        if eval_data:
+            self.bot_eval_events.append(
+                {"type": "CHALLENGE_DECISION", "challenger": next_player, "eval": eval_data}
+            )
+        if eval_data and self.record_eval_in_replay:
+            self.recorder.record_event(
+                "CHALLENGE_DECISION",
+                challenger=next_player,
+                challenge=challenge,
+                eval=eval_data,
+            )
+        else:
+            self.recorder.record_event(
+                "CHALLENGE_DECISION", challenger=next_player, challenge=challenge
+            )
         if challenge:
             self.state.challenge_stats[next_bot.name]["attempts"] += 1
             truthful = all(card.rank == self.state.active_rank for card in self.last_played_cards)
@@ -440,6 +470,7 @@ class GameSession:
             "seed": self.seed,
             "human_index": self.human_index,
             "bot_types": list(self.bot_types),
+            "record_eval_in_replay": self.record_eval_in_replay,
             "state": _state_to_dict(self.state),
             "active_order": list(self.active_order),
             "pending_decision": self.pending_decision.to_dict() if self.pending_decision else None,
@@ -467,6 +498,7 @@ class GameSession:
             human_index=data["human_index"],
             bot_types=bot_types,
             seed=data.get("seed"),
+            record_eval_in_replay=data.get("record_eval_in_replay", False),
         )
         session.session_id = data.get("session_id", session.session_id)
         master_rng_states = data.get("bot_rng_states", [])
