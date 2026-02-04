@@ -34,6 +34,7 @@ class GameState:
     pile_pickups: List[int] = field(default_factory=list)
     challenge_stats: Dict[str, Dict[str, int]] = field(default_factory=dict)
     log: List[GameLogEvent] = field(default_factory=list)
+    debug_eval_log: List[GameLogEvent] = field(default_factory=list)
 
     def active_players(self) -> List[int]:
         return [idx for idx, player in enumerate(self.players) if player.placement is None]
@@ -44,6 +45,9 @@ class GameState:
     def add_log(self, message: str) -> None:
         self.log.append(GameLogEvent(message=message))
 
+    def add_debug_log(self, message: str) -> None:
+        self.debug_eval_log.append(GameLogEvent(message=message))
+
 
 class Game:
     def __init__(
@@ -51,10 +55,14 @@ class Game:
         players: List[BotBase],
         rng_seed: Optional[int] = None,
         recorder: Optional[ReplayRecorder] = None,
+        debug_eval: bool = False,
+        record_eval_in_replay: bool = False,
     ) -> None:
         self.rng_seed = rng_seed
         self.players = players
         self.recorder = recorder
+        self.debug_eval = debug_eval
+        self.record_eval_in_replay = record_eval_in_replay
 
     def setup(self) -> GameState:
         import random
@@ -195,6 +203,18 @@ class Game:
             self.recorder.record_event(
                 "CHALLENGE_DECISION", challenger=next_player_idx, challenge=challenge
             )
+        if self.recorder is not None:
+            if eval_data and self.record_eval_in_replay:
+                self.recorder.record_event(
+                    "CHALLENGE_DECISION",
+                    challenger=next_player_idx,
+                    challenge=challenge,
+                    eval=eval_data,
+                )
+            else:
+                self.recorder.record_event(
+                    "CHALLENGE_DECISION", challenger=next_player_idx, challenge=challenge
+                )
         if challenge:
             state.challenge_stats[next_player.bot.name]["attempts"] += 1
             truthful = all(card.rank == state.active_rank for card in played_cards)

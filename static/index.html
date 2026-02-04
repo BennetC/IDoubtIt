@@ -85,6 +85,10 @@
         <input type="checkbox" id="play-debug-toggle" />
         Debug view
       </label>
+      <label class="toggle">
+        <input type="checkbox" id="play-bot-eval-toggle" />
+        Debug: Bot eval
+      </label>
     </div>
     <input id="step-slider" type="range" min="0" max="0" value="0" />
   </header>
@@ -111,6 +115,10 @@
             </label>
           </div>
           <ol id="history-list"></ol>
+        </details>
+        <details class="history">
+          <summary>Bot Eval (Current Event)</summary>
+          <div id="replay-bot-eval" class="bot-eval-panel"></div>
         </details>
       </section>
 
@@ -154,6 +162,28 @@
             </label>
           </div>
           <ol id="play-history-list"></ol>
+        </details>
+        <details class="history">
+          <summary>Bot Eval (Live)</summary>
+          <ol id="play-bot-eval-list" class="bot-eval-list"></ol>
+        </details>
+        <details class="history">
+          <summary>After-game analysis</summary>
+          <div class="history-controls">
+            <label>
+              Player
+              <select id="play-bot-eval-player-filter"></select>
+            </label>
+            <label>
+              Decision
+              <select id="play-bot-eval-type-filter">
+                <option value="all" selected>All</option>
+                <option value="CHALLENGE_DECISION">Challenge decisions</option>
+                <option value="SELECT_RANK">Rank selections</option>
+              </select>
+            </label>
+          </div>
+          <ol id="play-bot-eval-analysis" class="bot-eval-list"></ol>
         </details>
       </section>
 

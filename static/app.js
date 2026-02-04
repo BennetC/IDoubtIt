@@ -53,6 +53,12 @@ const elements = {
   playSaveSelect: document.getElementById("play-save-select"),
   playLoad: document.getElementById("play-load"),
   playDebugToggle: document.getElementById("play-debug-toggle"),
+  playBotEvalToggle: document.getElementById("play-bot-eval-toggle"),
+  playBotEvalList: document.getElementById("play-bot-eval-list"),
+  playBotEvalPlayerFilter: document.getElementById("play-bot-eval-player-filter"),
+  playBotEvalTypeFilter: document.getElementById("play-bot-eval-type-filter"),
+  playBotEvalAnalysis: document.getElementById("play-bot-eval-analysis"),
+  replayBotEval: document.getElementById("replay-bot-eval"),
 };
 
 let replayData = null;
@@ -64,6 +70,8 @@ let playSession = null;
 let playEvents = [];
 let playSelectedCards = new Set();
 let playDebug = false;
+let playBotEval = false;
+let playBotEvalEntries = [];
 let historyOrder = "desc";
 let playHistoryOrder = "desc";
 let lastDecisionKey = null;
@@ -186,6 +194,17 @@ function describeEvent(event, index) {
     default:
       return `Event ${index}: ${type}`;
   }
+}
+
+function formatEval(evalData) {
+  if (!evalData) {
+    return "";
+  }
+  return `p_truthful=${evalData.p_truthful.toFixed(2)}, U_challenge=${evalData.u_challenge.toFixed(
+    2,
+  )}, U_pass=${evalData.u_pass.toFixed(2)}, pile=${evalData.pile}, k=${evalData.k}, my_active=${
+    evalData.my_active
+  }, opp_hand=${evalData.opp_hand}`;
 }
 
 function primaryEventPlayer(event) {
@@ -365,6 +384,13 @@ function renderState(step) {
   elements.pileSize.textContent = state.pile.length;
 
   elements.eventText.textContent = describeEvent(event, step);
+  if (elements.replayBotEval) {
+    if (event && event.eval) {
+      elements.replayBotEval.textContent = formatEval(event.eval);
+    } else {
+      elements.replayBotEval.innerHTML = "<em>No eval data for this event.</em>";
+    }
+  }
 
   if (showPublic) {
     elements.pileCards.innerHTML = `<em>${state.pile.length} cards hidden</em>`;
@@ -573,6 +599,85 @@ function appendPlayHistory(events) {
   }
 }
 
+function appendPlayBotEval(entries) {
+  if (!entries || entries.length === 0) {
+    return;
+  }
+  for (const entry of entries) {
+    playBotEvalEntries.push(entry);
+  }
+}
+
+function renderPlayBotEvalList() {
+  if (!elements.playBotEvalList) {
+    return;
+  }
+  elements.playBotEvalList.innerHTML = "";
+  if (!playBotEval || playBotEvalEntries.length === 0) {
+    elements.playBotEvalList.innerHTML = "<li><em>No bot eval data.</em></li>";
+    return;
+  }
+  for (const [idx, entry] of playBotEvalEntries.entries()) {
+    const item = document.createElement("li");
+    item.textContent = `${idx + 1}. P${entry.challenger} ${entry.type}: ${formatEval(
+      entry.eval,
+    )}`;
+    item.classList.add(playerColorClass(entry.challenger));
+    elements.playBotEvalList.appendChild(item);
+  }
+}
+
+function updateBotEvalFilters() {
+  if (!elements.playBotEvalPlayerFilter || !playSession) {
+    return;
+  }
+  elements.playBotEvalPlayerFilter.innerHTML = "";
+  const allOption = document.createElement("option");
+  allOption.value = "all";
+  allOption.textContent = "All";
+  elements.playBotEvalPlayerFilter.appendChild(allOption);
+  playSession.public_state.players.forEach((player) => {
+    const option = document.createElement("option");
+    option.value = String(player.id);
+    option.textContent = `P${player.id}`;
+    elements.playBotEvalPlayerFilter.appendChild(option);
+  });
+}
+
+function renderBotEvalAnalysis() {
+  if (!elements.playBotEvalAnalysis) {
+    return;
+  }
+  elements.playBotEvalAnalysis.innerHTML = "";
+  if (!playSession || !playSession.finished || playBotEvalEntries.length === 0) {
+    elements.playBotEvalAnalysis.innerHTML = "<li><em>No analysis data.</em></li>";
+    return;
+  }
+  const playerFilter = elements.playBotEvalPlayerFilter?.value ?? "all";
+  const typeFilter = elements.playBotEvalTypeFilter?.value ?? "all";
+  const filtered = playBotEvalEntries.filter((entry) => {
+    if (playerFilter !== "all" && String(entry.challenger) !== playerFilter) {
+      return false;
+    }
+    if (typeFilter !== "all" && entry.type !== typeFilter) {
+      return false;
+    }
+    return true;
+  });
+  if (filtered.length === 0) {
+    elements.playBotEvalAnalysis.innerHTML = "<li><em>No matching eval data.</em></li>";
+    return;
+  }
+  filtered.forEach((entry, idx) => {
+    const item = document.createElement("li");
+    item.textContent = `${idx + 1}. P${entry.challenger} ${entry.type}: ${formatEval(
+      entry.eval,
+    )}`;
+    item.classList.add(playerColorClass(entry.challenger));
+    elements.playBotEvalAnalysis.appendChild(item);
+  });
+}
+
 function renderPlayHistory() {
   elements.playHistoryList.innerHTML = "";
   const indices = playEvents.map((_, idx) => idx);
@@ -615,9 +720,23 @@ function renderPlayState() {
     elements.playHand.innerHTML = "";
     elements.playChallengeButtons.innerHTML = "";
     elements.playSubmit.classList.add("hidden");
+    if (elements.playBotEvalList) {
+      elements.playBotEvalList.innerHTML = "";
+    }
+    if (elements.playBotEvalAnalysis) {
+      elements.playBotEvalAnalysis.innerHTML = "";
+    }
     playSelectedCards = new Set();
     lastDecisionKey = null;
     return;
+  }
+  const botEvalDetails = elements.playBotEvalList?.closest("details");
+  const botEvalAnalysisDetails = elements.playBotEvalAnalysis?.closest("details");
+  if (botEvalDetails) {
+    botEvalDetails.classList.toggle("hidden", !playBotEval);
+  }
+  if (botEvalAnalysisDetails) {
+    botEvalAnalysisDetails.classList.toggle("hidden", !playBotEval);
   }
   const state = playDebug ? playSession.debug_state : playSession.public_state;
   elements.playActiveRank.textContent = state.active_rank ?? "-";
@@ -674,6 +793,9 @@ function renderPlayState() {
   if (playSession.finished) {
     elements.playDecision.textContent = "Game over.";
     elements.playStatus.textContent = "Game over.";
+    updateBotEvalFilters();
+    renderPlayBotEvalList();
+    renderBotEvalAnalysis();
     return;
   }
   if (playSession.paused) {
@@ -685,6 +807,7 @@ function renderPlayState() {
   }
   if (!decision) {
     elements.playDecision.textContent = "Waiting for the next decision.";
+    renderPlayBotEvalList();
     return;
   }
   if (decision.type === "SELECT_RANK") {
@@ -737,12 +860,17 @@ function renderPlayState() {
     elements.playChallengeButtons.appendChild(challenge);
     elements.playChallengeButtons.appendChild(pass);
   }
+  renderPlayBotEvalList();
 }
 
 function applyPlayResponse(data) {
   playSession = data;
   appendPlayHistory(data.events);
+  appendPlayBotEval(data.bot_eval);
   renderPlayHistory();
+  updateBotEvalFilters();
+  renderPlayBotEvalList();
+  renderBotEvalAnalysis();
   if (data.replay_saved) {
     loadReplayList();
   }
@@ -807,6 +935,12 @@ function setupControls() {
       renderPlayHistory();
     }
   });
+  elements.playBotEvalPlayerFilter.addEventListener("change", () => {
+    renderBotEvalAnalysis();
+  });
+  elements.playBotEvalTypeFilter.addEventListener("change", () => {
+    renderBotEvalAnalysis();
+  });
   elements.replaySelect.addEventListener("change", (event) => {
     loadReplay(event.target.value);
   });
@@ -819,10 +953,16 @@ function setupControls() {
     playDebug = event.target.checked;
     renderPlayState();
   });
+  elements.playBotEvalToggle.addEventListener("change", (event) => {
+    playBotEval = event.target.checked;
+    renderPlayBotEvalList();
+    renderBotEvalAnalysis();
+  });
   elements.playStart.addEventListener("click", async () => {
     try {
       clearPlayError();
       playEvents = [];
+      playBotEvalEntries = [];
       const playerCount = Number(elements.playPlayerCount.value);
       const humanIndex = Number(elements.playHumanSeat.value);
       const botType = elements.playBotType.value;
@@ -878,6 +1018,7 @@ function setupControls() {
       await postJson("/api/game/stop", { session_id: playSession.session_id });
       playSession = null;
       playEvents = [];
+      playBotEvalEntries = [];
       renderPlayState();
     } catch (error) {
       showPlayError(error.message);
