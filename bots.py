@@ -24,6 +24,7 @@ class BotBase:
 
     def __init__(self, rng: random.Random) -> None:
         self.rng = rng
+        self.last_challenge_debug: Optional[str] = None
 
     def choose_active_rank(self, hand: List[Card], public: PublicState) -> str:
         raise NotImplementedError
@@ -35,6 +36,60 @@ class BotBase:
 
     def should_challenge(self, hand: List[Card], public: PublicState) -> bool:
         raise NotImplementedError
+
+
+def p_truthful_play(
+    opponent_hand_size: int,
+    my_count_active: int,
+    known_out_of_play_active: int,
+    k: int,
+    my_hand_size: int,
+    known_out_of_play_total: int,
+) -> float:
+    if opponent_hand_size <= 0 or k <= 0:
+        return 0.0
+    total_active = 4
+    available_active_for_others = total_active - known_out_of_play_active - my_count_active
+    if available_active_for_others < k:
+        return 0.0
+    unknown_cards_outside_me = 52 - my_hand_size - known_out_of_play_total
+    if unknown_cards_outside_me <= 0:
+        return 0.0
+    if opponent_hand_size > unknown_cards_outside_me:
+        opponent_hand_size = unknown_cards_outside_me
+    if opponent_hand_size < k:
+        return 0.0
+    try:
+        numerator = math.comb(available_active_for_others, k) * math.comb(
+            unknown_cards_outside_me - available_active_for_others,
+            opponent_hand_size - k,
+        )
+        denominator = math.comb(unknown_cards_outside_me, opponent_hand_size)
+    except ValueError:
+        return 0.0
+    if denominator == 0:
+        return 0.0
+    return min(1.0, numerator / denominator)
+
+
+def _known_out_of_play_total(public: PublicState) -> int:
+    return sum(public.known_discarded.values()) + sum(public.known_revealed.values())
+
+
+def _format_challenge_debug(
+    p_truthful: float,
+    u_challenge: float,
+    u_pass: float,
+    pile_size: int,
+    k: int,
+    my_count_active: int,
+    opponent_hand_size: int,
+) -> str:
+    return (
+        f"p_truthful={p_truthful:.2f}, U_challenge={u_challenge:.2f}, "
+        f"U_pass={u_pass:.2f}, pile={pile_size}, k={k}, "
+        f"my_active={my_count_active}, opp_hand={opponent_hand_size}"
+    )
 
 
 class RandomBot(BotBase):
@@ -59,7 +114,31 @@ class RandomBot(BotBase):
         pile_size = public.pile_size
         base = min(0.6, 0.1 + pile_size / 40)
         adjustment = max(0.0, 0.08 * count_active)
-        return self.rng.random() < max(0.05, base - adjustment)
+        decision = self.rng.random() < max(0.05, base - adjustment)
+        known_active = public.known_discarded.get(active_rank, 0) + public.known_revealed.get(
+            active_rank, 0
+        )
+        opponent_size = public.hand_sizes.get(public.last_player_id, 0)
+        p_truthful = p_truthful_play(
+            opponent_hand_size=opponent_size,
+            my_count_active=count_active,
+            known_out_of_play_active=known_active,
+            k=public.last_play_count,
+            my_hand_size=len(hand),
+            known_out_of_play_total=_known_out_of_play_total(public),
+        )
+        u_challenge = pile_size * (1 - 2 * p_truthful)
+        u_pass = 0.2 * pile_size - 0.5
+        self.last_challenge_debug = _format_challenge_debug(
+            p_truthful,
+            u_challenge,
+            u_pass,
+            pile_size,
+            public.last_play_count,
+            count_active,
+            opponent_size,
+        )
+        return decision
 
 
 class HeuristicBot(BotBase):
@@ -104,26 +183,50 @@ class HeuristicBot(BotBase):
         if active_rank is None:
             return False
         known_in_hand = sum(1 for card in hand if card.rank == active_rank)
-        remaining = 4 - known_in_hand
-        remaining -= public.known_discarded.get(active_rank, 0)
-        remaining -= public.known_revealed.get(active_rank, 0)
-        remaining = max(0, remaining)
+        known_out_of_play_active = public.known_discarded.get(
+            active_rank, 0
+        ) + public.known_revealed.get(active_rank, 0)
         opponent_size = public.hand_sizes.get(public.last_player_id, 0)
         k = public.last_play_count
-        # Approximate probability: assume opponent hand is uniform unknown cards.
         if opponent_size <= 0 or k <= 0:
             return False
-        prob_truth = 1.0
-        for i in range(k):
-            denom = max(1, opponent_size - i)
-            prob_truth *= min(1.0, (remaining - i) / denom)
-        pile_penalty = 0.6 * public.pile_size
-        # Risk adjustment if opponent is near empty and pile is large.
-        risk = 0.0
-        if opponent_size <= 3 and public.pile_size >= 6:
-            risk = 1.5
-        expected_gain = (1 - prob_truth) * public.pile_size - prob_truth * pile_penalty
-        return expected_gain > risk
+        p_truthful = p_truthful_play(
+            opponent_hand_size=opponent_size,
+            my_count_active=known_in_hand,
+            known_out_of_play_active=known_out_of_play_active,
+            k=k,
+            my_hand_size=len(hand),
+            known_out_of_play_total=_known_out_of_play_total(public),
+        )
+        pile_size = public.pile_size
+        min_opp_cards = min(public.hand_sizes.values()) if public.hand_sizes else opponent_size
+        tempo_bonus = max(3.0, pile_size / 2)
+        tempo_penalty = tempo_bonus if min_opp_cards <= 3 else 0.0
+        u_challenge = pile_size * (1 - 2 * p_truthful) - tempo_penalty
+        if len(hand) <= 3 and p_truthful > 0.2 and pile_size < 8:
+            u_challenge -= 1.5
+        alpha = 0.2
+        beta = 0.5
+        u_pass = alpha * pile_size - beta
+        if min_opp_cards <= 3:
+            u_pass += tempo_bonus
+        desperate = len(hand) >= 8 and pile_size >= 8
+        if p_truthful == 0:
+            decision = True
+        elif p_truthful > 0.65 and not desperate:
+            decision = False
+        else:
+            decision = u_challenge > u_pass
+        self.last_challenge_debug = _format_challenge_debug(
+            p_truthful,
+            u_challenge,
+            u_pass,
+            pile_size,
+            k,
+            known_in_hand,
+            opponent_size,
+        )
+        return decision
 
 
 class HumanWebPlayer(BotBase):
